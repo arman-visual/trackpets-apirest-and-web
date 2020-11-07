@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "animales")
-public class Animal implements Serializable {
+public class Mascota implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,14 +56,6 @@ public class Animal implements Serializable {
 	@JoinColumn(name = "id_protectora")
 	@OneToOne(fetch = FetchType.LAZY)
 	private Protectora herramienta;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getDni() {
 		return dni;

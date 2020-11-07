@@ -9,31 +9,31 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<form th:action="@{/home/}">
+	<form th:action="@{/home/}" th:object="${mascota}">
 		<table>
 			<tr>
 				<td>Nombre</td>
-				<td><input/></td>
+				<td><input type="text" th:field="*{nombre}" /></td>
 			</tr>
 			<tr>
 				<td>Edad</td>
-				<td><input/></td>
+				<td><input type="text" th:field="*{edad}"/></td>
 			</tr>
 			<tr>
 				<td>Raza</td>
-				<td><input/></td>
+				<td><input type="text" th:field="*{raza}" /></td>
 			</tr>
 			<tr>
 				<td>Tamaño</td>
-				<td><input/></td>
+				<td><input type="text" th:field="*{tamaño}" /></td>
 			</tr>
 			<tr>
 				<td>Nº Chip</td>
-				<td><input/></td>
+				<td><input type="text" th:field="*{dni}" /></td>
 			</tr>
 			<tr>
 				<td>Descripcion</td>
-				<td><input/></td>
+				<td><input type="text" th:field="*{descripcion}"/></td>
 			</tr>
 			<tr>
 				<td><input type="submit" value="Dar de alta"/></td>

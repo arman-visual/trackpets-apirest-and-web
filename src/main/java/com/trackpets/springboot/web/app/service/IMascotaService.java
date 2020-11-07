@@ -3,17 +3,17 @@ package com.trackpets.springboot.web.app.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.trackpets.springboot.web.app.models.entity.Animal;
+import com.trackpets.springboot.web.app.models.entity.Mascota;
 
-public interface IAnimalService {
+public interface IMascotaService {
 	
-	public List<Animal>findAll();
+	public List<Mascota>findAll();
 	
-	//public Optional<Animal> findById(Long id);
+	public Optional<Mascota> findById(Long id);
 	
-	//public void deleteById(Long id);
+	public void deleteById(Long id);
 	
-	//public Animal save(Animal empleado);
+	public Mascota save(Mascota mascota);
 	
 	//public Animal empleadoByDocumento(String documento);
 	

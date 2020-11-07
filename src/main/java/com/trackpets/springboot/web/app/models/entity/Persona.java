@@ -35,14 +35,6 @@ public class Persona implements Serializable {
 	@Column(name = "dni_persona", nullable = false)
 	private String dni;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getNombre() {
 		return nombre;
 	}

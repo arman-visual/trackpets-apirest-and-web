@@ -20,7 +20,7 @@ public class Protectora implements Serializable {
 	@Column(name = "numero_entidad_social", nullable = false)
 	private String numeroEntidad;
 
-	@Column(name = "nombre_protectora",length = 120, nullable = false)
+	@Column(name = "nombre_protectora", length = 120, nullable = false)
 	private String nombre;
 
 	@Column(name = "telefono", length = 15, nullable = false)
@@ -31,14 +31,6 @@ public class Protectora implements Serializable {
 
 	@Column(name = "direccion", length = 150, nullable = false)
 	private String direccion;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getNumeroEntidad() {
 		return numeroEntidad;
