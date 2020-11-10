@@ -25,11 +25,11 @@ public class IndexController {
 		return "formPet";
 	}
 	
-	@GetMapping(value = "/addProtectora")
-	public String addProtectora(ModelMap modelmap) {
-		modelmap.addAttribute("titulo", "Alta protectora");
-		return "formProtectora";
-	}
+	/*
+	 * @GetMapping(value = "/addProtectora") public String addProtectora(ModelMap
+	 * modelmap) { modelmap.addAttribute("titulo", "Alta protectora"); return
+	 * "formProtectora"; }
+	 */
 	@GetMapping(value = "/addPersona")
 	public String addPersona(ModelMap modelmap) {
 		modelmap.addAttribute("titulo", "Alta protectora");

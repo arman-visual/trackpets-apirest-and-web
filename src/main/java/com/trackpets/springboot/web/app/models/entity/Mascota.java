@@ -55,7 +55,13 @@ public class Mascota implements Serializable {
 
 	@JoinColumn(name = "id_protectora")
 	@OneToOne(fetch = FetchType.LAZY)
-	private Protectora herramienta;
+	private Protectora protectora;
+
+	
+	
+	public Long getId() {
+		return id;
+	}
 
 	public String getDni() {
 		return dni;
@@ -129,12 +135,12 @@ public class Mascota implements Serializable {
 		this.estado = estado;
 	}
 
-	public Protectora getHerramienta() {
-		return herramienta;
+	public Protectora getProtectora() {
+		return protectora;
 	}
 
-	public void setHerramienta(Protectora herramienta) {
-		this.herramienta = herramienta;
+	public void setProtectora(Protectora protectora) {
+		this.protectora = protectora;
 	}
 
 	public static long getSerialversionuid() {

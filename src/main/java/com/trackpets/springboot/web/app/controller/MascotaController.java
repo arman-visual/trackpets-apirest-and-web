@@ -11,47 +11,52 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.avisual.web.app.models.entity.Empleado;
 import com.trackpets.springboot.web.app.models.entity.Mascota;
 import com.trackpets.springboot.web.app.service.IMascotaService;
+import com.trackpets.springboot.web.app.service.IProtectoraService;
 
 @Controller
-@RequestMapping("/animal")
+@RequestMapping("/mascota")
 public class MascotaController {
 	
 	@Autowired
 	private IMascotaService mascotaService;
+	
+	@Autowired
+	private IProtectoraService protectoraService;
 
-	@GetMapping("/lista")
+	@GetMapping("/listar")
 	public String listar(Model model) {
-		model.addAttribute("titulo", "Lista de empleados");
+		model.addAttribute("titulo", "Lista de mascotas almacenadas");
 		model.addAttribute("mascotas", mascotaService.findAll());
-		return "listaMascotas";
+		return "listarPet";
 	}
 	
-	@GetMapping(value = "/addAnimal")
+	@GetMapping(value = "/addMascota")
 	public String addMascota(ModelMap modelmap) {
 		Mascota mascota = new Mascota();
 		modelmap.put("mascota", mascota);
 		modelmap.put("titulo", "Alta mascota");
+		modelmap.put("protectoras", protectoraService.findAll());
 		modelmap.put("textButton", "Dar de alta");
 		return "formPet";
 	}
 	
-	@GetMapping(value = "/guardar")
+	@PostMapping(value = "/guardar")
 	public String guardarMascota(@Validated Mascota mascota, BindingResult result, ModelMap modelmap) {
+
 		if (result.hasErrors()) {
 			modelmap.addAttribute("titulo", "Registro de Empleado");
-			return "formUser";
+			return "formPet";
 		}
 		mascotaService.save(mascota);
 //		Redireccion al path /home
-		return "redirect:home";
+		return "redirect:home/";
 	}
 	
-	@GetMapping("/form/{id}")
+	@GetMapping("/editar/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 
 		Optional<Mascota> mascota = null;
@@ -63,7 +68,8 @@ public class MascotaController {
 		}
 		model.put("mascota", mascota);
 		model.put("titulo", "Editar mascota");
-		model.put("textButton", "actualizar");
+		model.put("protectoras", protectoraService.findAll());
+		model.put("textButton", "Actualizar");
 		return "formPet";
 	}
 
@@ -74,7 +80,6 @@ public class MascotaController {
 		if (id > 0) {
 			mascotaService.deleteById(id);
 		}
-		return "redirect:/animal/listaMascotas";
-
+		return "redirect:/animal/listar";
 	}
 }

@@ -83,6 +83,7 @@ public class Persona implements Serializable {
 		this.dni = dni;
 	}
 
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
