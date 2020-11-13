@@ -51,10 +51,10 @@ public class Mascota implements Serializable {
 	private String descripcion;
 
 	@Column(name = "disponible", nullable = false)
-	private Boolean estado;
+	private boolean estado;
 
 	@JoinColumn(name = "id_protectora")
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	private Protectora protectora;
 
 	
@@ -127,11 +127,11 @@ public class Mascota implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public Boolean getEstado() {
+	public boolean isEstado() {
 		return estado;
 	}
 
-	public void setEstado(Boolean estado) {
+	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
 

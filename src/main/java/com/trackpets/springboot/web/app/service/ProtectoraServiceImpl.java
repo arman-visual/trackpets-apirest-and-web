@@ -28,8 +28,12 @@ public class ProtectoraServiceImpl implements IProtectoraService{
 
 	@Override
 	@Transactional
-	public Protectora save(Protectora protectora) {
-		return protectoraDAO.save(protectora);
+	public void save(Protectora protectora) {
+		if (protectora.getId() != null && protectora.getId() > 0) {
+			em.merge(protectora);
+		} else {
+			protectoraDAO.save(protectora);
+		}
 	}
 
 	@Override
@@ -40,8 +44,10 @@ public class ProtectoraServiceImpl implements IProtectoraService{
 
 	@Override
 	@Transactional
-	public Optional<Protectora> findById(Long id) {
-		return protectoraDAO.findById(id);
+	public Protectora findById(Long id) {
+		Optional<Protectora> optionalProtectora = protectoraDAO.findById(id);
+		Protectora protectora = optionalProtectora.get();
+		return protectora;
 	}
 
 }

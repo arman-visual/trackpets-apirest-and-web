@@ -2,7 +2,6 @@ package com.trackpets.springboot.web.app.controller;
 
 import java.util.Map;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+
 import com.trackpets.springboot.web.app.models.entity.Mascota;
 import com.trackpets.springboot.web.app.service.IMascotaService;
 import com.trackpets.springboot.web.app.service.IProtectoraService;
 
 @Controller
 @RequestMapping("/mascota")
+@SessionAttributes("mascota")
 public class MascotaController {
 	
 	@Autowired
@@ -45,15 +48,15 @@ public class MascotaController {
 	}
 	
 	@PostMapping(value = "/guardar")
-	public String guardarMascota(@Validated Mascota mascota, BindingResult result, ModelMap modelmap) {
+	public String guardarMascota(@Validated Mascota mascota, BindingResult result, ModelMap modelmap, SessionStatus status) {
 
 		if (result.hasErrors()) {
 			modelmap.addAttribute("titulo", "Registro de Empleado");
 			return "formPet";
 		}
 		mascotaService.save(mascota);
-//		Redireccion al path /home
-		return "redirect:home/";
+		status.setComplete();
+		return "redirect:/mascota/listar";
 	}
 	
 	@GetMapping("/editar/{id}")
@@ -80,6 +83,6 @@ public class MascotaController {
 		if (id > 0) {
 			mascotaService.deleteById(id);
 		}
-		return "redirect:/animal/listar";
+		return "redirect:/mascota/listar";
 	}
 }

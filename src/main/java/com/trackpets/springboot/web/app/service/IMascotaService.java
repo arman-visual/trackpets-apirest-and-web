@@ -15,10 +15,16 @@ public interface IMascotaService {
 	
 	public Mascota save(Mascota mascota);
 	
-	//public Animal empleadoByDocumento(String documento);
+	public List<Mascota> mascotasByGenero(String genero);
 	
-	//public List<Animal> empleadosByProvincia(String provincia);
+	public List<Mascota> mascotasByNombre(String nombre);
 	
-	//public List<Animal> empleadosByApellido(String apellido);
+	public List<Mascota> mascotasByRaza(String raza);
+	
+	public List<Mascota> mascotasByTamaño(String tamaño);
+	
+	public List<Mascota> mascotasByEspecie(String especie);
+	
+	public List<Mascota> mascotasByEdad(String edad);
 
 }

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.trackpets.springboot.web.app.models.entity.Mascota;
 import com.trackpets.springboot.web.app.models.entity.Protectora;
@@ -20,6 +22,7 @@ import com.trackpets.springboot.web.app.service.IProtectoraService;
 
 @Controller
 @RequestMapping("/protectora")
+@SessionAttributes("protectora")
 public class ProtectoraController {
 	
 	@Autowired
@@ -42,21 +45,20 @@ public class ProtectoraController {
 	}
 	
 	@PostMapping(value = "/guardar")
-	public String guardarProtectora(@Validated Protectora protectora, BindingResult result, ModelMap modelmap) {
-		//Long idProtectora = mascota.getProtectora().getId();
+	public String guardarProtectora(@Validated Protectora protectora, BindingResult result, ModelMap modelmap, SessionStatus status) {
 		if (result.hasErrors()) {
 			modelmap.addAttribute("titulo", "Alta de protectora");
 			return "formProtectora";
-		}
+		}	
 		protectoraService.save(protectora);
-//		Redireccion al path /home
-		return "redirect:/home/";
+		status.setComplete();
+		return "redirect:/protectora/listar";
 	}
 
 	@GetMapping("/editar/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 
-		Optional<Protectora> protectora = null;
+		Protectora protectora = null;
 
 		if (id > 0) {
 			protectora = protectoraService.findById(id);
