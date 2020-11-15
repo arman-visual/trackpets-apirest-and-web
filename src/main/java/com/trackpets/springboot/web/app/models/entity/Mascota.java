@@ -11,9 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "animales")
@@ -39,12 +42,19 @@ public class Mascota implements Serializable {
 	@Column(name = "nombre", length = 30, nullable = false)
 	private String nombre;
 
+	@Column(name = "genero", length = 10, nullable = false)
+	private String genero;
+
+	@Column(name = "foto", length = 10, nullable = true)
+	private String foto;
+
 	@Column(name = "fecha_de_adopcion", nullable = true)
 	@Temporal(TemporalType.DATE)
 	private Date fechaAdopcion;
 
 	@Column(name = "fecha_de_alta", nullable = true)
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaAlta;
 
 	@Column(name = "descripcion", length = 250, nullable = true)
@@ -56,9 +66,12 @@ public class Mascota implements Serializable {
 	@JoinColumn(name = "id_protectora")
 	@OneToOne(fetch = FetchType.EAGER)
 	private Protectora protectora;
+	
+	@PrePersist
+	public void prePersist() {
+		fechaAlta = new Date();
+	}
 
-	
-	
 	public Long getId() {
 		return id;
 	}
@@ -141,6 +154,22 @@ public class Mascota implements Serializable {
 
 	public void setProtectora(Protectora protectora) {
 		this.protectora = protectora;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 
 	public static long getSerialversionuid() {

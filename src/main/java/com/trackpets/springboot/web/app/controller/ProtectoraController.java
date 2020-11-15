@@ -41,6 +41,7 @@ public class ProtectoraController {
 		Protectora protectora = new Protectora();
 		modelmap.addAttribute("protectora", protectora);
 		modelmap.addAttribute("titulo", "Alta protectora");
+		modelmap.addAttribute("textButton", "Dar alta protectora");
 		return "formProtectora";
 	}
 	

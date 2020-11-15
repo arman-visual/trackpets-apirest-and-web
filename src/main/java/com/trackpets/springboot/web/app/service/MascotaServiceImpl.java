@@ -74,14 +74,44 @@ public class MascotaServiceImpl implements IMascotaService{
 
 	@Override
 	public List<Mascota> mascotasByRaza(String raza) {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Mascota> cr = cb.createQuery(Mascota.class);
+		Root<Mascota> root = cr.from(Mascota.class);
+		cr.select(root).where(cb.like(root.get("raza"), "%" + raza + "%"));
+		List<Mascota> mascotas = em.createQuery(cr).getResultList();
+		if (mascotas.equals(null) || mascotas.isEmpty()) {
+			LOGGER.error("No se han encontrado mascotas de raza ".concat(raza));
+			throw new NoResultException(
+					"No se han encontrado mascotas con raza '".concat(raza).concat("'"));
+		} else {
+			LOGGER.info("Se han encontrado mascotas con raza '".concat(raza).concat("'"));
+			List<Mascota> mascotaFiltradas = mascotas.stream()
+					.filter(x-> x.isEstado())
+					.collect(Collectors.toList());
+			LOGGER.info("Filtrando mascotas solo disponibles... '".concat(raza).concat("'"));
+			return mascotaFiltradas;
+		}
 	}
 
 	@Override
 	public List<Mascota> mascotasByTamaño(String tamaño) {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Mascota> cr = cb.createQuery(Mascota.class);
+		Root<Mascota> root = cr.from(Mascota.class);
+		cr.select(root).where(cb.like(root.get("tamaño"), "%" + tamaño + "%"));
+		List<Mascota> mascotas = em.createQuery(cr).getResultList();
+		if (mascotas.equals(null) || mascotas.isEmpty()) {
+			LOGGER.error("No se han encontrado mascotas de tamaño ".concat(tamaño));
+			throw new NoResultException(
+					"No se han encontrado mascotas de tamaño '".concat(tamaño).concat("'"));
+		} else {
+			LOGGER.info("Se han encontrado mascotas de tamaño '".concat(tamaño).concat("'"));
+			List<Mascota> mascotaFiltradas = mascotas.stream()
+					.filter(x-> x.isEstado())
+					.collect(Collectors.toList());
+			LOGGER.info("Filtrando mascotas solo disponibles... '".concat(tamaño).concat("'"));
+			return mascotaFiltradas;
+		}
 	}
 
 	@Override
@@ -98,8 +128,23 @@ public class MascotaServiceImpl implements IMascotaService{
 
 	@Override
 	public List<Mascota> mascotasByGenero(String genero) {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Mascota> cr = cb.createQuery(Mascota.class);
+		Root<Mascota> root = cr.from(Mascota.class);
+		cr.select(root).where(cb.like(root.get("genero"), "%" + genero + "%"));
+		List<Mascota> mascotas = em.createQuery(cr).getResultList();
+		if (mascotas.equals(null) || mascotas.isEmpty()) {
+			LOGGER.error("No se han encontrado mascotas de genero ".concat(genero));
+			throw new NoResultException(
+					"No se han encontrado mascotas de genero '".concat(genero).concat("'"));
+		} else {
+			LOGGER.info("Se han encontrado mascotas de genero '".concat(genero).concat("'"));
+			List<Mascota> mascotaFiltradas = mascotas.stream()
+					.filter(x-> x.isEstado())
+					.collect(Collectors.toList());
+			LOGGER.info("Filtrando mascotas solo disponibles... '".concat(genero).concat("'"));
+			return mascotaFiltradas;
+		}
 	}
 
 }

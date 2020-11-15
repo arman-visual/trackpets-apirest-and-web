@@ -9,7 +9,8 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: update  servlet:    multipart:      max-file-size: 10MB
+      max-request-size: 10MB       
 logging:
   level: 
     org.hibernate.sql: debug

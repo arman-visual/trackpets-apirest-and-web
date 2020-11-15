@@ -31,30 +31,32 @@ public class MascotaRestController {
 		return mascotaService.findAll();
 	}
 	
-	@GetMapping("/buscar/{nombre}")
+	@GetMapping("/buscar/nombre/{nombre}")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Mascota> mascotasByNombre(@PathVariable String nombre) {
 		return mascotaService.mascotasByNombre(nombre);
 	}
 	
+	@GetMapping("/buscar/raza/{raza}")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Mascota> mascotasByRaza(@PathVariable String raza) {
+		return mascotaService.mascotasByRaza(raza);
+	}
+
+	@GetMapping("/buscar/tamaño/{tamaño}")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Mascota> mascotasByTamaño(@PathVariable String tamaño) {
+		List<Mascota> mascotas = mascotaService.mascotasByTamaño(tamaño);
+		return mascotas;
+	}
+	
+	@GetMapping("/buscar/genero/{genero}")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Mascota> mascotasByGenero(@PathVariable String genero) {
+		List<Mascota> mascotas = mascotaService.mascotasByGenero(genero);
+		return mascotas;
+	}
 	/*
-	 * @GetMapping("/buscar/{raza}")
-	 * 
-	 * @ResponseStatus(HttpStatus.OK) public List<Mascota>
-	 * mascotasByRaza(@PathVariable String raza) { return
-	 * mascotaService.mascotasByRaza(raza); }
-	 * 
-	 * @GetMapping("/buscar/{tamaño}")
-	 * 
-	 * @ResponseStatus(HttpStatus.OK) public List<Mascota>
-	 * mascotasByTamaño(@PathVariable String tamaño){ List<Mascota> mascotas =
-	 * mascotaService.mascotasByTamaño(tamaño); return mascotas; }
-	 * 
-	 * @GetMapping("/buscar/{sexo}")
-	 * 
-	 * @ResponseStatus(HttpStatus.OK) public List<Mascota>
-	 * mascotasByGenero(@PathVariable String genero){ List<Mascota> mascotas =
-	 * mascotaService.mascotasByGenero(genero); return mascotas; }
 	 * 
 	 * @GetMapping("/buscar/{tipo}")
 	 * 
@@ -62,7 +64,7 @@ public class MascotaRestController {
 	 * mascotasByEspecie(@PathVariable String especie){ List<Mascota> mascotas =
 	 * mascotaService.mascotasByEspecie(especie); return mascotas; }
 	 * 
-	 * @GetMapping("/buscar/{tipo}")
+	 * @GetMapping("/buscar/{edad}")
 	 * 
 	 * @ResponseStatus(HttpStatus.OK) public List<Mascota>
 	 * mascotasByEdad(@PathVariable String edad){ List<Mascota> mascotas =

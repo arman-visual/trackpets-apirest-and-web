@@ -28,6 +28,10 @@
 				<td><input type="text" th:field="*{tamaño}" /></td>
 			</tr>
 			<tr>
+				<td>Sexo</td>
+				<td><input type="text" th:field="*{genero}" /></td>
+			</tr>
+			<tr>
 				<td>Nº Chip</td>
 				<td><input type="text" th:field="*{dni}" /></td>
 			</tr>
@@ -38,7 +42,6 @@
 			<tr>
 				<td>Disponible para adoptar?</td>
 				<td><select th:field="*{estado}">
-                         <option value=""> -- </option>
                          <option value="true">Disponible</option>
 	    				<option value="false">No disponible</option>
                   </select></td>
