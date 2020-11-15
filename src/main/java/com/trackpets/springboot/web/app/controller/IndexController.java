@@ -32,7 +32,7 @@ public class IndexController {
 	}
 	@GetMapping(value = "/addPersona")
 	public String addPersona(ModelMap modelmap) {
-		modelmap.addAttribute("titulo", "Alta protectora");
+		modelmap.addAttribute("titulo", "Alta persona");
 		return "formPersona";
 	}
 }
