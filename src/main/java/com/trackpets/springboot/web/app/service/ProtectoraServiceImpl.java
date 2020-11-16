@@ -13,17 +13,17 @@ import com.trackpets.springboot.web.app.models.dao.IProtectoraDao;
 import com.trackpets.springboot.web.app.models.entity.Protectora;
 
 @Service
-public class ProtectoraServiceImpl implements IProtectoraService{
+public class ProtectoraServiceImpl implements IProtectoraService {
 
 	@Autowired
 	private EntityManager em;
 	@Autowired
 	private IProtectoraDao protectoraDAO;
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<Protectora> findAll() {
-		return (List<Protectora>)protectoraDAO.findAll();
+		return (List<Protectora>) protectoraDAO.findAll();
 	}
 
 	@Override

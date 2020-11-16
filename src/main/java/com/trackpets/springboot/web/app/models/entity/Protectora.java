@@ -15,7 +15,7 @@ public class Protectora implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name = "id")
 	private Long id;
 
 	@Column(name = "numero_entidad_social", nullable = false)
@@ -29,14 +29,12 @@ public class Protectora implements Serializable {
 
 	@Column(name = "correo_electronico", length = 120, nullable = false)
 	private String correo;
-	
+
 	@Column(name = "sitio_web", length = 150, nullable = false)
 	private String web;
 
-
 	@Column(name = "direccion", length = 150, nullable = false)
 	private String direccion;
-	
 
 	public Long getId() {
 		return id;
@@ -82,7 +80,6 @@ public class Protectora implements Serializable {
 		this.direccion = direccion;
 	}
 
-	
 	public String getWeb() {
 		return web;
 	}

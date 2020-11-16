@@ -23,10 +23,10 @@ import com.trackpets.springboot.web.app.service.IProtectoraService;
 @RequestMapping("/mascota")
 @SessionAttributes("mascota")
 public class MascotaController {
-	
+
 	@Autowired
 	private IMascotaService mascotaService;
-	
+
 	@Autowired
 	private IProtectoraService protectoraService;
 
@@ -36,7 +36,7 @@ public class MascotaController {
 		model.addAttribute("mascotas", mascotaService.findAll());
 		return "listarPet";
 	}
-	
+
 	@GetMapping(value = "/addMascota")
 	public String addMascota(ModelMap modelmap) {
 		Mascota mascota = new Mascota();
@@ -46,9 +46,10 @@ public class MascotaController {
 		modelmap.put("textButton", "Dar de alta");
 		return "formPet";
 	}
-	
+
 	@PostMapping(value = "/guardar")
-	public String guardarMascota(@Validated Mascota mascota, BindingResult result, ModelMap modelmap, SessionStatus status) {
+	public String guardarMascota(@Validated Mascota mascota, BindingResult result, ModelMap modelmap,
+			SessionStatus status) {
 
 		if (result.hasErrors()) {
 			modelmap.addAttribute("titulo", "Registro de Empleado");
@@ -58,7 +59,7 @@ public class MascotaController {
 		status.setComplete();
 		return "redirect:/mascota/listar";
 	}
-	
+
 	@GetMapping("/editar/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 
@@ -76,7 +77,6 @@ public class MascotaController {
 		return "formPet";
 	}
 
-	
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable(value = "id") Long id) {
 

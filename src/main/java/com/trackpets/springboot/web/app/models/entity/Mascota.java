@@ -66,7 +66,7 @@ public class Mascota implements Serializable {
 	@JoinColumn(name = "id_protectora")
 	@OneToOne(fetch = FetchType.EAGER)
 	private Protectora protectora;
-	
+
 	@PrePersist
 	public void prePersist() {
 		fechaAlta = new Date();

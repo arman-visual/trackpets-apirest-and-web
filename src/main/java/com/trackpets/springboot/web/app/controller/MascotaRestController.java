@@ -18,25 +18,25 @@ import com.trackpets.springboot.web.app.service.IMascotaService;
 @RestController
 @RequestMapping("/api/mascotas")
 public class MascotaRestController {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(MascotaController.class);
 
 	@Autowired
 	private IMascotaService mascotaService;
-	
+
 	@GetMapping("/buscar/todos")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Mascota> findAll() {
 		LOGGER.info("Accediendo findAll()...");
 		return mascotaService.findAll();
 	}
-	
+
 	@GetMapping("/buscar/nombre/{nombre}")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Mascota> mascotasByNombre(@PathVariable String nombre) {
 		return mascotaService.mascotasByNombre(nombre);
 	}
-	
+
 	@GetMapping("/buscar/raza/{raza}")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Mascota> mascotasByRaza(@PathVariable String raza) {
@@ -49,7 +49,7 @@ public class MascotaRestController {
 		List<Mascota> mascotas = mascotaService.mascotasByTamaño(tamaño);
 		return mascotas;
 	}
-	
+
 	@GetMapping("/buscar/genero/{genero}")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Mascota> mascotasByGenero(@PathVariable String genero) {

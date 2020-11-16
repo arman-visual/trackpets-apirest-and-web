@@ -20,15 +20,15 @@ import com.trackpets.springboot.web.app.models.dao.IMascotaDao;
 import com.trackpets.springboot.web.app.models.entity.Mascota;
 
 @Service
-public class MascotaServiceImpl implements IMascotaService{
+public class MascotaServiceImpl implements IMascotaService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MascotaServiceImpl.class);
-	
+
 	@Autowired
 	private EntityManager em;
 	@Autowired
 	private IMascotaDao animalDAO;
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<Mascota> findAll() {
@@ -60,13 +60,10 @@ public class MascotaServiceImpl implements IMascotaService{
 		List<Mascota> mascotas = em.createQuery(cr).getResultList();
 		if (mascotas.equals(null) || mascotas.isEmpty()) {
 			LOGGER.error("No se han encontrado mascotas con el nombre ".concat(nombre));
-			throw new NoResultException(
-					"No se han encontrado mascotas con el nombre '".concat(nombre).concat("'"));
+			throw new NoResultException("No se han encontrado mascotas con el nombre '".concat(nombre).concat("'"));
 		} else {
 			LOGGER.info("Se han encontrado mascotas con el nombre '".concat(nombre).concat("'"));
-			List<Mascota> mascotaFiltradas = mascotas.stream()
-					.filter(x-> x.isEstado())
-					.collect(Collectors.toList());
+			List<Mascota> mascotaFiltradas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
 			LOGGER.info("Filtrando mascotas solo disponibles... '".concat(nombre).concat("'"));
 			return mascotaFiltradas;
 		}
@@ -81,13 +78,10 @@ public class MascotaServiceImpl implements IMascotaService{
 		List<Mascota> mascotas = em.createQuery(cr).getResultList();
 		if (mascotas.equals(null) || mascotas.isEmpty()) {
 			LOGGER.error("No se han encontrado mascotas de raza ".concat(raza));
-			throw new NoResultException(
-					"No se han encontrado mascotas con raza '".concat(raza).concat("'"));
+			throw new NoResultException("No se han encontrado mascotas con raza '".concat(raza).concat("'"));
 		} else {
 			LOGGER.info("Se han encontrado mascotas con raza '".concat(raza).concat("'"));
-			List<Mascota> mascotaFiltradas = mascotas.stream()
-					.filter(x-> x.isEstado())
-					.collect(Collectors.toList());
+			List<Mascota> mascotaFiltradas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
 			LOGGER.info("Filtrando mascotas solo disponibles... '".concat(raza).concat("'"));
 			return mascotaFiltradas;
 		}
@@ -102,13 +96,10 @@ public class MascotaServiceImpl implements IMascotaService{
 		List<Mascota> mascotas = em.createQuery(cr).getResultList();
 		if (mascotas.equals(null) || mascotas.isEmpty()) {
 			LOGGER.error("No se han encontrado mascotas de tamaño ".concat(tamaño));
-			throw new NoResultException(
-					"No se han encontrado mascotas de tamaño '".concat(tamaño).concat("'"));
+			throw new NoResultException("No se han encontrado mascotas de tamaño '".concat(tamaño).concat("'"));
 		} else {
 			LOGGER.info("Se han encontrado mascotas de tamaño '".concat(tamaño).concat("'"));
-			List<Mascota> mascotaFiltradas = mascotas.stream()
-					.filter(x-> x.isEstado())
-					.collect(Collectors.toList());
+			List<Mascota> mascotaFiltradas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
 			LOGGER.info("Filtrando mascotas solo disponibles... '".concat(tamaño).concat("'"));
 			return mascotaFiltradas;
 		}
@@ -135,13 +126,10 @@ public class MascotaServiceImpl implements IMascotaService{
 		List<Mascota> mascotas = em.createQuery(cr).getResultList();
 		if (mascotas.equals(null) || mascotas.isEmpty()) {
 			LOGGER.error("No se han encontrado mascotas de genero ".concat(genero));
-			throw new NoResultException(
-					"No se han encontrado mascotas de genero '".concat(genero).concat("'"));
+			throw new NoResultException("No se han encontrado mascotas de genero '".concat(genero).concat("'"));
 		} else {
 			LOGGER.info("Se han encontrado mascotas de genero '".concat(genero).concat("'"));
-			List<Mascota> mascotaFiltradas = mascotas.stream()
-					.filter(x-> x.isEstado())
-					.collect(Collectors.toList());
+			List<Mascota> mascotaFiltradas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
 			LOGGER.info("Filtrando mascotas solo disponibles... '".concat(genero).concat("'"));
 			return mascotaFiltradas;
 		}

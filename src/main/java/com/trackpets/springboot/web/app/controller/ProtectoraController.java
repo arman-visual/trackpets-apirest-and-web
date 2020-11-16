@@ -1,8 +1,6 @@
 package com.trackpets.springboot.web.app.controller;
 
 import java.util.Map;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.trackpets.springboot.web.app.models.entity.Mascota;
 import com.trackpets.springboot.web.app.models.entity.Protectora;
 import com.trackpets.springboot.web.app.service.IProtectoraService;
 
@@ -24,18 +21,17 @@ import com.trackpets.springboot.web.app.service.IProtectoraService;
 @RequestMapping("/protectora")
 @SessionAttributes("protectora")
 public class ProtectoraController {
-	
+
 	@Autowired
 	private IProtectoraService protectoraService;
-	
-	
+
 	@GetMapping("/listar")
 	public String listar(Model model) {
 		model.addAttribute("titulo", "Lista de protectoras");
 		model.addAttribute("protectoras", protectoraService.findAll());
 		return "listProtectoras";
 	}
-	
+
 	@GetMapping(value = "/addProtectora")
 	public String addProtectora(ModelMap modelmap) {
 		Protectora protectora = new Protectora();
@@ -44,13 +40,14 @@ public class ProtectoraController {
 		modelmap.addAttribute("textButton", "Dar alta protectora");
 		return "formProtectora";
 	}
-	
+
 	@PostMapping(value = "/guardar")
-	public String guardarProtectora(@Validated Protectora protectora, BindingResult result, ModelMap modelmap, SessionStatus status) {
+	public String guardarProtectora(@Validated Protectora protectora, BindingResult result, ModelMap modelmap,
+			SessionStatus status) {
 		if (result.hasErrors()) {
 			modelmap.addAttribute("titulo", "Alta de protectora");
 			return "formProtectora";
-		}	
+		}
 		protectoraService.save(protectora);
 		status.setComplete();
 		return "redirect:/protectora/listar";
@@ -72,7 +69,6 @@ public class ProtectoraController {
 		return "formProtectora";
 	}
 
-	
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable(value = "id") Long id) {
 

@@ -18,20 +18,19 @@ public class IndexController {
 		modelmap.addAttribute("titulo", "Track Pets Web Oficial");
 		return "index";
 	}
-	
+
 	@GetMapping(value = "/addAnimal")
 	public String addAnimal(ModelMap modelmap) {
 		modelmap.addAttribute("titulo", "Alta mascota");
 		return "formPet";
 	}
-	
-	
+
 	@GetMapping(value = "/addProtectora")
 	public String addProtectora(ModelMap modelmap) {
 		modelmap.addAttribute("titulo", "Alta protectora");
 		return "formProtectora";
 	}
-	 
+
 	@GetMapping(value = "/addPersona")
 	public String addPersona(ModelMap modelmap) {
 		modelmap.addAttribute("titulo", "Alta protectora");
