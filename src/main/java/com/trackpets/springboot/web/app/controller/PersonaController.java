@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/persona")
 public class PersonaController {
-	
+
 	@GetMapping(value = "/addPersona")
-	public String addAnimal(ModelMap modelmap) {
+	public String addPersona(ModelMap modelmap) {
 		modelmap.addAttribute("titulo", "Alta persona");
 		return "formPersona";
 	}

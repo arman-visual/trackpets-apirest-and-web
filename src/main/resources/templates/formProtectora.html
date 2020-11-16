@@ -9,33 +9,33 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<form th:action="@{/formProtectora}">
+	<form th:action="@{/protectora/guardar}" th:object="${protectora}" method="post" >
 		<table>
 			<tr>
 				<td>Nombre de protectora</td>
-				<td><input/></td>
+				<td><input type="text" th:field="*{nombre}" /></td>
 			</tr>
 			<tr>
 				<td>Nº de entidad social</td>
-				<td><input/></td>
+				<td><input type="text" th:field="*{numeroEntidad}" /></td>
 			</tr>
 			<tr>
 				<td>Telefono</td>
-				<td><input/></td>
+				<td><input type="text" th:field="*{telefono}" /></td>
 			</tr>
 			<tr>
 				<td>Correo electronico</td>
-				<td><input/></td>
+				<td><input type="text" th:field="*{correo}" /></td>
 			</tr>
 			<tr>
 				<td>Direccion</td>
-				<td><input/></td>
+				<td><input type="text" th:field="*{direccion}" /></td>
 			</tr>
 			<tr>
-				<td><input type="submit" value="Dar de alta"/></td>
+				<td><input type="submit" th:value="${textButton}"/></td>
 			</tr>
 		</table>
-<!-- 	<input type="hidden" th:field="*{id}"/>	 -->
+<!--  	<input type="hidden" th:field="*{id}"/>	 -->
 	</form>
 </body>
 </html>
