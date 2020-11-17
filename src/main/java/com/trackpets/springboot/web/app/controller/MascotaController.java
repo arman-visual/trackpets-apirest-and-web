@@ -3,6 +3,7 @@ package com.trackpets.springboot.web.app.controller;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -29,6 +30,22 @@ public class MascotaController {
 
 	@Autowired
 	private IProtectoraService protectoraService;
+
+	@GetMapping("/home")
+	public String home(Model model) {
+		model.addAttribute("titulo", "Buscar mascotas");
+		return "search";
+	}
+	
+	@RequestMapping("/buscar")
+	public String buscar(Model model,
+			@Param("nombre")String nombre) {
+		if (mascotaService.mascotasByNombre(nombre) != null) {
+			model.addAttribute("titulo", "Buscar mascotas");
+			model.addAttribute("mascotas", mascotaService.mascotasByNombre(nombre));
+			return "search";
+		} else return "redirect:/mascota/home";
+	}
 
 	@GetMapping("/listar")
 	public String listar(Model model) {

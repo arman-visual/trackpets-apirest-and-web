@@ -57,16 +57,19 @@ public class MascotaServiceImpl implements IMascotaService {
 		CriteriaQuery<Mascota> cr = cb.createQuery(Mascota.class);
 		Root<Mascota> root = cr.from(Mascota.class);
 		cr.select(root).where(cb.like(root.get("nombre"), "%" + nombre + "%"));
-		List<Mascota> mascotas = em.createQuery(cr).getResultList();
-		if (mascotas.equals(null) || mascotas.isEmpty()) {
-			LOGGER.error("No se han encontrado mascotas con el nombre ".concat(nombre));
-			throw new NoResultException("No se han encontrado mascotas con el nombre '".concat(nombre).concat("'"));
-		} else {
+		List<Mascota> mascotas = null;
+		try {
+			mascotas = em.createQuery(cr).getResultList();
+
 			LOGGER.info("Se han encontrado mascotas con el nombre '".concat(nombre).concat("'"));
-			List<Mascota> mascotaFiltradas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
+			mascotas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
 			LOGGER.info("Filtrando mascotas solo disponibles... '".concat(nombre).concat("'"));
-			return mascotaFiltradas;
+
+		} catch (NoResultException nre) {
+			LOGGER.debug("No se han encontrado mascotas con el nombre '".concat(nombre).concat("'") + nre);
+			return mascotas;
 		}
+		return mascotas;
 	}
 
 	@Override
