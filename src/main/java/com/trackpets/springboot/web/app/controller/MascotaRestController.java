@@ -39,8 +39,7 @@ public class MascotaRestController {
 		List<Mascota> mascotas = mascotaService.mascotasByNombre(nombre);
 		if(mascotas.isEmpty()) {
 			throw new NoResultException("No se han encontrado mascotas con raza '".concat(nombre).concat("'"));
-		}
-		return mascotas;
+		} else return mascotas;
 	}
 
 	@GetMapping("/buscar/raza/{raza}")

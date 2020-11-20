@@ -60,14 +60,15 @@ public class MascotaServiceImpl implements IMascotaService {
 		List<Mascota> mascotas = null;
 		try {
 			mascotas = em.createQuery(cr).getResultList();
-
-			LOGGER.info("Se han encontrado mascotas con el nombre '".concat(nombre).concat("'"));
-			mascotas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
-			LOGGER.info("Filtrando mascotas solo disponibles... '".concat(nombre).concat("'"));
-
+			if (!mascotas.isEmpty()) {
+				LOGGER.info("Se han encontrado mascotas con el nombre '".concat(nombre).concat("'"));
+				mascotas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
+				LOGGER.info("Filtrando mascotas solo disponibles... '".concat(nombre).concat("'"));
+			} else {
+				LOGGER.error("No se han encontrado mascotas con el nombre '".concat(nombre).concat("'"));
+			}
 		} catch (NoResultException nre) {
-			LOGGER.debug("No se han encontrado mascotas con el nombre '".concat(nombre).concat("'") + nre);
-			return mascotas;
+			LOGGER.debug("Error :" + nre);
 		}
 		return mascotas;
 	}
@@ -78,16 +79,20 @@ public class MascotaServiceImpl implements IMascotaService {
 		CriteriaQuery<Mascota> cr = cb.createQuery(Mascota.class);
 		Root<Mascota> root = cr.from(Mascota.class);
 		cr.select(root).where(cb.like(root.get("raza"), "%" + raza + "%"));
-		List<Mascota> mascotas = em.createQuery(cr).getResultList();
-		if (mascotas.equals(null) || mascotas.isEmpty()) {
-			LOGGER.error("No se han encontrado mascotas de raza ".concat(raza));
-			throw new NoResultException("No se han encontrado mascotas con raza '".concat(raza).concat("'"));
-		} else {
+		List<Mascota> mascotas = null;
+		try {
+			mascotas = em.createQuery(cr).getResultList();
+			if (!mascotas.isEmpty()) {
 			LOGGER.info("Se han encontrado mascotas con raza '".concat(raza).concat("'"));
-			List<Mascota> mascotaFiltradas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
+			mascotas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
 			LOGGER.info("Filtrando mascotas solo disponibles... '".concat(raza).concat("'"));
-			return mascotaFiltradas;
+			}else {
+				LOGGER.error("No se han encontrado mascotas con el nombre de raza '".concat(raza).concat("'"));
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error: " + e);
 		}
+		return mascotas;
 	}
 
 	@Override
@@ -96,16 +101,20 @@ public class MascotaServiceImpl implements IMascotaService {
 		CriteriaQuery<Mascota> cr = cb.createQuery(Mascota.class);
 		Root<Mascota> root = cr.from(Mascota.class);
 		cr.select(root).where(cb.like(root.get("tamaño"), "%" + tamaño + "%"));
-		List<Mascota> mascotas = em.createQuery(cr).getResultList();
-		if (mascotas.equals(null) || mascotas.isEmpty()) {
-			LOGGER.error("No se han encontrado mascotas de tamaño ".concat(tamaño));
-			throw new NoResultException("No se han encontrado mascotas de tamaño '".concat(tamaño).concat("'"));
-		} else {
+		List<Mascota> mascotas = null;
+		try {
+			mascotas = em.createQuery(cr).getResultList();
+			if (!mascotas.isEmpty()) {
 			LOGGER.info("Se han encontrado mascotas de tamaño '".concat(tamaño).concat("'"));
-			List<Mascota> mascotaFiltradas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
+			mascotas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
 			LOGGER.info("Filtrando mascotas solo disponibles... '".concat(tamaño).concat("'"));
-			return mascotaFiltradas;
+			}else {
+				LOGGER.error("No se han encontrado mascotas de tamaño ".concat(tamaño));
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error: " + e);
 		}
+		return mascotas;
 	}
 
 	@Override
@@ -126,16 +135,20 @@ public class MascotaServiceImpl implements IMascotaService {
 		CriteriaQuery<Mascota> cr = cb.createQuery(Mascota.class);
 		Root<Mascota> root = cr.from(Mascota.class);
 		cr.select(root).where(cb.like(root.get("genero"), "%" + genero + "%"));
-		List<Mascota> mascotas = em.createQuery(cr).getResultList();
-		if (mascotas.equals(null) || mascotas.isEmpty()) {
-			LOGGER.error("No se han encontrado mascotas de genero ".concat(genero));
-			throw new NoResultException("No se han encontrado mascotas de genero '".concat(genero).concat("'"));
-		} else {
+		List<Mascota> mascotas = null;
+		try {
+			mascotas = em.createQuery(cr).getResultList();
+			if (!mascotas.isEmpty()) {
 			LOGGER.info("Se han encontrado mascotas de genero '".concat(genero).concat("'"));
-			List<Mascota> mascotaFiltradas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
+			mascotas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
 			LOGGER.info("Filtrando mascotas solo disponibles... '".concat(genero).concat("'"));
-			return mascotaFiltradas;
+			}else {
+				LOGGER.error("No se han encontrado mascotas de genero ".concat(genero));
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error: " + e);
 		}
+		return mascotas;
 	}
 
 }
