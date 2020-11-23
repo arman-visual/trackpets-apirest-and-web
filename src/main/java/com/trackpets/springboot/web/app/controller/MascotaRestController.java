@@ -2,6 +2,8 @@ package com.trackpets.springboot.web.app.controller;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,10 @@ public class MascotaRestController {
 	@GetMapping("/buscar/nombre/{nombre}")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Mascota> mascotasByNombre(@PathVariable String nombre) {
-		return mascotaService.mascotasByNombre(nombre);
+		List<Mascota> mascotas = mascotaService.mascotasByNombre(nombre);
+		if(mascotas.isEmpty()) {
+			throw new NoResultException("No se han encontrado mascotas con raza '".concat(nombre).concat("'"));
+		} else return mascotas;
 	}
 
 	@GetMapping("/buscar/raza/{raza}")
