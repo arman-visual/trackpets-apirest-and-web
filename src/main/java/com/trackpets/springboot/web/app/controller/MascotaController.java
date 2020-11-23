@@ -1,5 +1,6 @@
 package com.trackpets.springboot.web.app.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -41,30 +42,41 @@ public class MascotaController {
 
 	@GetMapping("/home")
 	public String home(Model model) {
+		List<Mascota> mascotas = new ArrayList<Mascota>();
 		model.addAttribute("titulo", "Buscar mascotas");
+		model.addAttribute("mascotas", mascotas);
 		return "buscar";
 	}
 	
 	@RequestMapping("/buscar")
 	public String buscar(Model model,
 			@Param("palabraClave")String palabraClave, @Param("filtro")String filtro) {		
+			List<Mascota> mascotas = new ArrayList<Mascota>();
 			model.addAttribute("titulo", "Buscar mascotas");
 			if(filtro.equals(null)||filtro.equals("")) {
 				LOGGER.info("--filtro: ".concat(filtro) + " --".concat("findAll()"));
 				model.addAttribute("mascotas", mascotaService.findAll());
 			}else if (filtro.equals("Nombre")) {
-				model.addAttribute("mascotas", mascotaService.mascotasByNombre(palabraClave));
+				mascotas = mascotaService.mascotasByNombre(palabraClave);
+				LOGGER.info("--filtro: ".concat(filtro) + " --".concat("mascotasByNombre(".concat(palabraClave).concat(")")));
+				model.addAttribute("mascotas", mascotas);
 			} else if (filtro.equals("Genero")) {
+				mascotas = mascotaService.mascotasByGenero(palabraClave);
 				LOGGER.info("--filtro: ".concat(filtro) + " --".concat("mascotasByGenero(".concat(palabraClave).concat(")")));
-				model.addAttribute("mascotas", mascotaService.mascotasByGenero(palabraClave));
+				model.addAttribute("mascotas", mascotas);
 			} else if (filtro.equals("Raza")) {
-				model.addAttribute("mascotas", mascotaService.mascotasByRaza(palabraClave));
-			} else if (filtro.equals("Tamaño")) {
+				mascotas = mascotaService.mascotasByRaza(palabraClave);
 				LOGGER.info("--filtro: ".concat(filtro) + " --".concat("mascotasByRaza(".concat(palabraClave).concat(")")));
-				model.addAttribute("mascotas", mascotaService.mascotasByTamaño(palabraClave));
+				model.addAttribute("mascotas", mascotas);
+			} else if (filtro.equals("Tamaño")) {
+				mascotas = mascotaService.mascotasByTamaño(palabraClave);
+				LOGGER.info("--filtro: ".concat(filtro) + " --".concat("mascotasByTamaño(".concat(palabraClave).concat(")")));
+				model.addAttribute("mascotas", mascotas);
 			} else if (filtro.equals("Edad")) {
+				//TODO Falta por desarrollar
+				mascotas= mascotaService.mascotasByEdad(palabraClave);
 				LOGGER.info("--filtro: ".concat(filtro) + " --".concat("mascotasByEdad(".concat(palabraClave).concat(")")));
-				model.addAttribute("mascotas", mascotaService.mascotasByEdad(palabraClave));
+				model.addAttribute("mascotas", mascotas);
 			}
 			return "buscar";
 	}

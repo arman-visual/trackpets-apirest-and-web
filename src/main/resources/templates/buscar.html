@@ -12,40 +12,51 @@
 
 </head>
 <body>
-	<div class="container">
-		<div class="row justify-content-md-center">
-			<h1 class="col-12" th:text="${titulo}"></h1>
-			<form class="col-12 form-inline" th:action="@{/mascota/buscar}"
-				method="get">
-				<select id="filtro" name="filtro" class="form-control" >
-				<option value="">Selecionar</option>
-					<option th:name="filtro" th:each="filtro: ${filtros}" th:text="${filtro}" th:value="${filtro}" ></option>
-				</select>
-				<input class="form-control mr-sm-2" type="text"
-					placeholder="Search" aria-label="Search" name="palabraClave"
-					th:value="${nombre}" required="required">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-			</form>
+	<main role="main">
+		<!-- container -->
+		<section class="jumbotron text-center">
+			<div class="container">
+				<img class="img-fluid" th:src="@{/image/logoTransparente.png}" width="200">
+				<h1 class="jumbotron-heading" th:text="${titulo}"></h1>
+				<form class="row justify-content-center form-inline" th:action="@{/mascota/buscar}"
+					method="get">
+					<select id="filtro" name="filtro" class="form-control">
+						<option value="">Selecionar</option>
+						<option th:name="filtro" th:each="filtro: ${filtros}"
+							th:text="${filtro}" th:value="${filtro}"></option>
+					</select> <input class="form-control mr-sm-2" type="text"
+						placeholder="Buscar..." aria-label="Search" name="palabraClave"
+						th:value="${nombre}" required="required">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+				</form>
+			</div>
+		</section>
+<!-- 		IF -->
+		<div class="album py-5 bg-light" th:if="${mascotas.size()}">
+			<div class="container">
+				<div class="row">
+					<div class="card col-md-4" style="width: 18rem;"
+						th:each="mascota: ${mascotas}">
+						<img class="img-fluid img-thumbnail"
+							src="https://loremflickr.com/320/240?random=1"
+							alt="Imagen de mascota">
+						<div class="card-body">
+							<h5 class="card-title" th:text="${mascota.nombre}"></h5>
+							<p class="card-text" th:text="${mascota.raza}"></p>
+							<a href="#" class="btn btn-primary">Adoptar</a>
+						</div>
+					</div>
+				</div>
+<!-- 				<p class="alert alert-success" role="alert">Hay resultados</p>		 -->
+			</div>
 		</div>
-		<table class="table table-dark  text-center">
-		<thead>
-			<tr>
-				<th scope="col">Id</th>
-				<th scope="col">Nombre</th>
-				<th scope="col">Edad</th>
-				<th scope="col">Raza</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="mascota: ${mascotas}">
-				<td th:text="${mascota.id}"></td>
-				<td th:text="${mascota.nombre}"></td>
-				<td th:text="${mascota.edad}"></td>
-				<td th:text="${mascota.raza}"></td>
-			</tr>
-		</tbody>
-	</table>
-	</div>
+<!-- 		ELSE -->
+		<div role="alert"th:unless="${mascotas.size()}">
+			<div class="container alert alert-danger">
+				<p>No hay resultados</p>
+			</div>		
+		</div>
+	</main>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
