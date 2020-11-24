@@ -3,6 +3,7 @@ package com.trackpets.springboot.web.app.controller;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -30,13 +31,15 @@ public class MascotaController {
 	@Autowired
 	private IProtectoraService protectoraService;
 
+	@Secured("ROLE_USER")
 	@GetMapping("/listar")
 	public String listar(Model model) {
 		model.addAttribute("titulo", "Lista de mascotas almacenadas");
 		model.addAttribute("mascotas", mascotaService.findAll());
 		return "listarPet";
 	}
-
+	
+	@Secured("ROLE_ADMIN")
 	@GetMapping(value = "/addMascota")
 	public String addMascota(ModelMap modelmap) {
 		Mascota mascota = new Mascota();
@@ -46,7 +49,8 @@ public class MascotaController {
 		modelmap.put("textButton", "Dar de alta");
 		return "formPet";
 	}
-
+	
+	@Secured("ROLE_USER")
 	@PostMapping(value = "/guardar")
 	public String guardarMascota(@Validated Mascota mascota, BindingResult result, ModelMap modelmap,
 			SessionStatus status) {
@@ -59,7 +63,8 @@ public class MascotaController {
 		status.setComplete();
 		return "redirect:/mascota/listar";
 	}
-
+	
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/editar/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 
@@ -76,7 +81,8 @@ public class MascotaController {
 		model.put("textButton", "Actualizar");
 		return "formPet";
 	}
-
+	
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable(value = "id") Long id) {
 

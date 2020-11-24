@@ -20,36 +20,37 @@ import com.trackpets.springboot.web.app.models.entity.Role;
 import com.trackpets.springboot.web.app.models.entity.Usuario;
 
 @Service("jpaUserDetailsService")
-public class JpaUserDetailsService implements UserDetailsService{
+public class JpaUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private IUsuarioDao usuarioDao;
-	
-	private Logger logger=LoggerFactory.getLogger(JpaUserDetailsService.class);
-	
+
+	private Logger logger = LoggerFactory.getLogger(JpaUserDetailsService.class);
+
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario = usuarioDao.findByUSername(username);
-		
+		Usuario usuario = usuarioDao.findByUsername(username);
+
 		if (usuario == null) {
 			logger.error("error login: no existe el usuario '" + username + "'");
-			throw new UsernameNotFoundException("Usernmae" + username + "no existe en el sistema");
+			throw new UsernameNotFoundException("Username" + username + "no existe en el sistema");
 		}
-		
+
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		
+
 		for (Role role : usuario.getRoles()) {
 			logger.info("Role :".concat(role.getAuthority()));
 			authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
-		}		
-		
+		}
+
 		if (authorities.isEmpty()) {
 			logger.error("usuario " + username + "no tiene roles asignados");
 			throw new UsernameNotFoundException("usuario '" + username + "' no tiene roles asignados");
 		}
-		
-		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true, authorities);
+
+		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true,
+				authorities);
 	}
 
 }

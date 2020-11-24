@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
-
+import org.springframework.security.access.annotation.Secured;
 import com.trackpets.springboot.web.app.models.entity.Mascota;
 import com.trackpets.springboot.web.app.service.IMascotaService;
 
+@Secured("ROLE_USER")
 @RestController
 @RequestMapping("/api/mascotas")
 public class MascotaRestController {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -17,8 +17,8 @@
 				<th scope="col">Edad</th>
 				<th scope="col">Raza</th>
 				<th scope="col">Estado</th>
-				<th scope="col">Editar</th>
-				<th scope="col">Eliminar</th>
+				<th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Editar</th>
+				<th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Eliminar</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -28,8 +28,8 @@
 				<td th:text="${mascota.edad}"></td>
 				<td th:text="${mascota.raza}"></td>
 				<td th:text="${mascota.estado}"></td>
-				<td><a class="btn btn-primary btn-xs" th:href="@{/mascota/editar/} + ${mascota.id}" th:text="editar"></a></td>
-				<td><a class="btn btn-danger btn-xs" th:href="@{/mascota/eliminar/} + ${mascota.id}" th:text="eliminar" onclick="return confirm('Estas seguro de querar borrar la mascota indicado');"></a></td>
+				<td><a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-primary btn-xs" th:href="@{/mascota/editar/} + ${mascota.id}" th:text="editar"></a></td>
+				<td><a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-danger btn-xs" th:href="@{/mascota/eliminar/} + ${mascota.id}" th:text="eliminar" onclick="return confirm('Estas seguro de querar borrar la mascota indicado');"></a></td>
 			</tr>
 		</tbody>
 	</table>
