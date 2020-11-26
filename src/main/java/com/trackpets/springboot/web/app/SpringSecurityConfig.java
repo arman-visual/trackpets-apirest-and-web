@@ -29,17 +29,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/", "/css/**", "/js/**", "/images/**", "/home").permitAll()
-		/*.antMatchers("/mascota/addMascota/**").hasAnyRole("USER")
-		.antMatchers("/mascota/editar/**").hasAnyRole("ADMIN")
-		.antMatchers("/persona/addPersona/**").hasAnyRole("USER")
-		.antMatchers("/protectora/addProtectora/**").hasAnyRole("USER")
-		.antMatchers("/protectora/editar/**").hasAnyRole("ADMIN")*/
+				/*
+				 * .antMatchers("/mascota/addMascota/**").hasAnyRole("USER")
+				 * .antMatchers("/mascota/editar/**").hasAnyRole("ADMIN")
+				 * .antMatchers("/persona/addPersona/**").hasAnyRole("USER")
+				 * .antMatchers("/protectora/addProtectora/**").hasAnyRole("USER")
+				 * .antMatchers("/protectora/editar/**").hasAnyRole("ADMIN")
+				 */
 		.anyRequest().authenticated()
 		.and()
-		.formLogin()/*.loginPage("/login"*/
-		.permitAll()
-		.and()
-		.logout().permitAll(); 
+		.formLogin().loginPage("/login").permitAll()
+		.and().logout().permitAll(); 
 	}
 	
 	@Autowired

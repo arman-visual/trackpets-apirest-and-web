@@ -41,7 +41,7 @@ public class MascotaController {
 	@Autowired
 	private IProtectoraService protectoraService;
 
-	@Secured("ROLE_USER")
+	//@Secured("ROLE_USER")
 	@GetMapping("/home")
 	public String home(Model model) {
 		List<Mascota> mascotas = new ArrayList<Mascota>();
