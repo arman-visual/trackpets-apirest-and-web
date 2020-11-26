@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8" />
 <!-- Bootstrap CSS -->
@@ -14,9 +14,9 @@
 <body>
 	<div class="container">
 		<h1 th:text="${titulo}"></h1>
-		<p><a class="badge badge-primary text-wrap" style="width: 8rem;" th:href="@{/mascota/addMascota}">Alta mascota</a></p>
-		<p><a class="badge badge-primary text-wrap" style="width: 8rem;" th:href="@{/protectora/addProtectora}">Alta protectora</a></p>
-		<p><a class="badge badge-primary text-wrap" style="width: 8rem;" th:href="@{/persona/addPersona}">Alta persona</a></p>
+		<p><a sec:authorize="hasRole('ROLE_ADMIN')" class="badge badge-primary text-wrap" style="width: 8rem;" th:href="@{/mascota/addMascota}">Alta mascota</a></p>
+		<p><a sec:authorize="hasRole('ROLE_USER')" class="badge badge-primary text-wrap" style="width: 8rem;" th:href="@{/protectora/addProtectora}">Alta protectora</a></p>
+		<p><a sec:authorize="hasRole('ROLE_USER')" class="badge badge-primary text-wrap" style="width: 8rem;" th:href="@{/persona/addPersona}">Alta persona</a></p>
 	</div>
 </body>
 </html>
