@@ -1,6 +1,8 @@
 package com.trackpets.springboot.web.app.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,42 +17,83 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.trackpets.springboot.web.app.models.dao.IRoleDao;
 import com.trackpets.springboot.web.app.models.dao.IUsuarioDao;
+import com.trackpets.springboot.web.app.models.entity.Privilege;
 import com.trackpets.springboot.web.app.models.entity.Role;
 import com.trackpets.springboot.web.app.models.entity.Usuario;
 
-@Service("jpaUserDetailsService")
+@Service("userDetailsService")
+@Transactional
 public class JpaUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private IUsuarioDao usuarioDao;
+    @Autowired
+    private IUsuarioService service;
+    
+	@Autowired
+	private IRoleDao roleDao;
 
 	private Logger logger = LoggerFactory.getLogger(JpaUserDetailsService.class);
 
 	@Override
 	@Transactional(readOnly = true)
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario = usuarioDao.findByUsername(username);
-
-		if (usuario == null) {
-			logger.error("error login: no existe el usuario '" + username + "'");
-			throw new UsernameNotFoundException("Username" + username + "no existe en el sistema");
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		Usuario user = usuarioDao.findByEmail(email);
+		if (user == null) {
+			return new org.springframework.security.core.userdetails.User(" ", " ", true, true, true, true,
+					getAuthorities(Arrays.asList(roleDao.findByName("ROLE_USER"))));
 		}
 
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+				user.isEnabled(), true, true, true, getAuthorities(user.getRoles()));
+		/*OLD
+		 * Usuario usuario = usuarioDao.findByUsername(username);
+		 * if (usuario == null) { logger.error("error login: no existe el usuario '" +
+		 * username + "'"); throw new UsernameNotFoundException("Username" + username +
+		 * "no existe en el sistema"); }
+		 * 
+		 * List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		 * 
+		 * for (Role role : usuario.getRoles()) {
+		 * logger.info("Role :".concat(role.getAuthority())); authorities.add(new
+		 * SimpleGrantedAuthority(role.getAuthority())); }
+		 * 
+		 * if (authorities.isEmpty()) { logger.error("usuario " + username +
+		 * "no tiene roles asignados"); throw new UsernameNotFoundException("usuario '"
+		 * + username + "' no tiene roles asignados"); }
+		 * 
+		 * return new User(usuario.getUsername(), usuario.getPassword(),
+		 * usuario.getEnabled(), true, true, true, authorities);
+		 */
+	}
+	
+	
+	  private Collection<? extends GrantedAuthority> getAuthorities(final
+	  Collection<Role> roles) { return getGrantedAuthorities(getPrivileges(roles));
+	  }
+	 
 
-		for (Role role : usuario.getRoles()) {
-			logger.info("Role :".concat(role.getAuthority()));
-			authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
+	private List<String> getPrivileges(Collection<Role> roles) {
+
+		List<String> privileges = new ArrayList<>();
+		List<Privilege> collection = new ArrayList<>();
+		for (Role role : roles) {
+			collection.addAll(role.getPrivileges());
 		}
-
-		if (authorities.isEmpty()) {
-			logger.error("usuario " + username + "no tiene roles asignados");
-			throw new UsernameNotFoundException("usuario '" + username + "' no tiene roles asignados");
+		for (Privilege item : collection) {
+			privileges.add(item.getName());
 		}
+		return privileges;
+	}
 
-		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true,
-				authorities);
+	private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		for (String privilege : privileges) {
+			authorities.add(new SimpleGrantedAuthority(privilege));
+		}
+		return authorities;
 	}
 
 }

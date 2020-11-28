@@ -11,10 +11,3 @@ INSERT INTO trackpetsdb.animales (id_animal, dni_animal, edad, disponible, gener
 INSERT INTO trackpetsdb.animales (id_animal, dni_animal, edad, disponible, genero, nombre, raza, tamaño, id_protectora) VALUES ('6', '6666', '5', 1, 'hembra', 'kacy', 'mestizo', 'pequeño', '2');
 INSERT INTO trackpetsdb.animales (id_animal, dni_animal, edad, disponible, genero, nombre, raza, tamaño, id_protectora) VALUES ('7', '7777', '2', 1, 'macho', 'sharo', 'mestizo', 'grande', '2');
 INSERT INTO trackpetsdb.animales (id_animal, dni_animal, edad, disponible, genero, nombre, raza, tamaño, id_protectora) VALUES ('8', '8888', '3', 1, 'macho', 'coco', 'mestizo', 'grande', '2');
-
-// Security
-INSERT INTO USERS (username, password, enabled) VALUES ('armando', '$2a$10$O9wxmH/AeyZZzIS09Wp8YOEMvFnbRVJ8B4dmAMVSGloR62lj.yqXG', 1)
-INSERT INTO USERS (username, password, enabled) VALUES ('admin', '$2a$10$DOMDxjYyfZ/e7RcBfUpzqeaCs8pLgcizuiQWXPkU35nOhZlFcE9MS', 1)
-
-INSERT INTO authorities (user_id, authority) VALUES (1,'ROLE_USER')
-INSERT INTO authorities (user_id, authority) VALUES (2,'ROLE_ADMIN')
