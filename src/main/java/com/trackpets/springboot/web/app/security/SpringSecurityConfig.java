@@ -1,4 +1,4 @@
-package com.trackpets.springboot.web.app;
+package com.trackpets.springboot.web.app.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.trackpets.springboot.web.app.service.JpaUserDetailsService;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
@@ -16,19 +18,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
-	private JpaUserDetailsService userDetailsService;
-	
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	private JpaUserDetailsService userDetailsService;	 
 	
 	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
+	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/css/**", "/js/**", "/images/**", "/home").permitAll()
+		http.authorizeRequests().antMatchers("/", "/css/**", "/js/**", "/images/**", "/home","/registro").permitAll()
 				/*
 				 * .antMatchers("/mascota/addMascota/**").hasAnyRole("USER")
 				 * .antMatchers("/mascota/editar/**").hasAnyRole("ADMIN")
@@ -41,12 +40,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.formLogin().loginPage("/login").permitAll()
 		.and().logout().permitAll(); 
 	}
-	
-	@Autowired
-	public void configurerGlobal(AuthenticationManagerBuilder build) throws Exception {
 
-			build.userDetailsService(userDetailsService)
-			.passwordEncoder(passwordEncoder);
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService);
 	}
+	
 }
 

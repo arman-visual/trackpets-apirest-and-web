@@ -6,16 +6,17 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.trackpets.springboot.web.app.UserAlreadyExistException;
 import com.trackpets.springboot.web.app.models.dao.IRoleDao;
 import com.trackpets.springboot.web.app.models.dao.IUsuarioDao;
+import com.trackpets.springboot.web.app.models.dao.VerificationTokenRepository;
 import com.trackpets.springboot.web.app.models.dao.dto.UsuarioDTO;
 import com.trackpets.springboot.web.app.models.entity.Role;
 import com.trackpets.springboot.web.app.models.entity.Usuario;
+import com.trackpets.springboot.web.app.models.entity.VerificationToken;
 
 
 @Service
@@ -27,10 +28,14 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	private IRoleDao roleDao;
 	
 	@Autowired
+	private VerificationTokenRepository tokenRepository;
+	
+	@Autowired
 	private IUsuarioDao usuarioDao;
 	
-	@Autowired(required = true)
+	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
 
 	@Override
 	public void save(Usuario usuario) {
@@ -54,7 +59,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 			throw new UserAlreadyExistException(
 					"There is an account with that email address: " + accountDto.getEmail());
 		}
-		final Usuario usuario = new Usuario();
+		Usuario usuario = new Usuario();
 
 		usuario.setUsername(accountDto.getUsername());
 		usuario.setPassword(passwordEncoder.encode(accountDto.getPassword()));
@@ -65,6 +70,33 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
 	private boolean emailExists(final String email) {
 		return usuarioDao.findByEmail(email) != null;
+	}
+
+	@Override
+	public Usuario findUserByEmail(String email) {
+		return usuarioDao.findByEmail(email);
+	}
+
+	@Override
+	public Usuario getUser(String verificationToken) {
+		Usuario user = tokenRepository.findByToken(verificationToken).getUser();
+		return user;
+	}
+
+	@Override
+	public void saveRegisteredUser(Usuario user) {
+		usuarioDao.save(user);	
+	}
+
+	@Override
+	public void createVerificationToken(Usuario user, String token) {
+		VerificationToken myToken = new VerificationToken(token, user);
+		tokenRepository.save(myToken);
+	}
+
+	@Override
+	public VerificationToken getVerificationToken(String VerificationToken) {
+		  return tokenRepository.findByToken(VerificationToken);
 	}
 
 }

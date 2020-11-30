@@ -1,11 +1,14 @@
 package com.trackpets.springboot.web.app.controller;
 
 import java.security.Principal;
+import java.util.Calendar;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -13,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -20,6 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.trackpets.springboot.web.app.UserAlreadyExistException;
 import com.trackpets.springboot.web.app.models.dao.dto.UsuarioDTO;
 import com.trackpets.springboot.web.app.models.entity.Usuario;
+import com.trackpets.springboot.web.app.models.entity.VerificationToken;
+import com.trackpets.springboot.web.app.security.OnRegistrationCompleteEvent;
 import com.trackpets.springboot.web.app.service.IUsuarioService;
 
 @Controller
@@ -27,6 +33,12 @@ public class IndexController {
 
 	@Autowired
 	private IUsuarioService usuarioService;
+	
+	@Autowired
+	private MessageSource messages;
+
+	@Autowired
+	ApplicationEventPublisher eventPublisher;
 	
 	@GetMapping("/login")
 	public String login(Model model, Principal principal, RedirectAttributes flash) {
@@ -39,47 +51,80 @@ public class IndexController {
 	}
 	
     @GetMapping("/registro")
-    public String verRegistroForm(WebRequest request, Model model) {
+    public String verRegistroForm(final HttpServletRequest request, Model model) {
     	UsuarioDTO usuarioDTO = new UsuarioDTO();
         model.addAttribute("user", usuarioDTO);
         return "registroUsuario";
     }
     
     @PostMapping("/registro")
-    public ModelAndView RegistroForm(@ModelAttribute("userForm") UsuarioDTO userDto, ModelAndView mav, BindingResult bindingResult, HttpServletRequest request) {
+    public ModelAndView RegistroForm(@ModelAttribute("user") UsuarioDTO userDto, BindingResult bindingResult, HttpServletRequest request) {
     	try {
             Usuario registered = usuarioService.registerNewUserAccount(userDto);
+            
+            String appUrl = request.getContextPath();
+            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, 
+              request.getLocale(), appUrl));
+            
         } catch (UserAlreadyExistException uaeEx) {
+        	ModelAndView mav = new ModelAndView("registration", "user", userDto);
             mav.addObject("message", "An account for that username/email already exists.");
             return mav;
+        }catch (RuntimeException ex) {
+            return new ModelAndView("emailError", "user", userDto);
         }
      
-        return new ModelAndView("successRegister", "user", userDto);
+    	return new ModelAndView("successRegister", "user", userDto);
     }
 
+    @GetMapping("/regitrationConfirm")
+    public String confirmRegistration
+      (WebRequest request, Model model, @RequestParam("token") String token) {
+     
+        Locale locale = request.getLocale();
+        
+        VerificationToken verificationToken = usuarioService.getVerificationToken(token);
+        if (verificationToken == null) {
+            String message = messages.getMessage("auth.message.invalidToken", null, locale);
+            model.addAttribute("message", message);
+            return "redirect:/badUser.html?lang=" + locale.getLanguage();
+        }
+        
+        Usuario user = verificationToken.getUser();
+        Calendar cal = Calendar.getInstance();
+        if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+            String messageValue = messages.getMessage("auth.message.expired", null, locale);
+            model.addAttribute("message", messageValue);
+            return "redirect:/badUser.html?lang=" + locale.getLanguage();
+        } 
+        
+        user.setEnabled(true); 
+        usuarioService.saveRegisteredUser(user); 
+        return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); 
+    }
    
-	@Secured("ROLE_USER")
+	//@Secured("ROLE_USER")
 	@GetMapping(value = { "/home", "/", "" })
 	public String index(ModelMap modelmap) {
 		modelmap.addAttribute("titulo", "Track Pets Web Oficial");
 		return "index";
 	}
 
-	@Secured("ROLE_ADMIN")
+	//@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@GetMapping(value = "/addAnimal")
 	public String addAnimal(ModelMap modelmap) {
 		modelmap.addAttribute("titulo", "Alta mascota");
 		return "formPet";
 	}
 
-	@Secured("ROLE_USER")
+	//@Secured({"READ_PRIVILEGE", "WRITE_PRIVILEGE"})
 	@GetMapping(value = "/addProtectora")
 	public String addProtectora(ModelMap modelmap) {
 		modelmap.addAttribute("titulo", "Alta protectora");
 		return "formProtectora";
 	}
 
-	@Secured("ROLE_USER")
+	//@Secured("ROLE_ADMIN")
 	@GetMapping(value = "/addPersona")
 	public String addPersona(ModelMap modelmap) {
 		modelmap.addAttribute("titulo", "Alta persona");

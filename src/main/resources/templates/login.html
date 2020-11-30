@@ -36,8 +36,10 @@
 						<input type="submit" class="btn btn_lg btn-primary btn-block"
 							value="Sign In" />
 					</div>
+						<div th:if="${param.error != null}"
+							th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">error</div>
 
-				</form>
+					</form>
 			</div>
 
 		</div>
