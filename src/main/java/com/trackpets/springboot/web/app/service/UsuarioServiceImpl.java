@@ -3,7 +3,7 @@ package com.trackpets.springboot.web.app.service;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -52,6 +52,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		return usuarioDao.findByUsername(username);
 	}
 
+	@Transactional
 	@Override
 	public Usuario registerNewUserAccount(UsuarioDTO accountDto) throws UserAlreadyExistException {
 

@@ -15,13 +15,14 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
 
-@Component("authenticationFailureHandler")
+
+@Component
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     @Autowired
     private MessageSource messages;
 
-    @Autowired
+    @Autowired(required = true)
     private LocaleResolver localeResolver;
 
 	@Override

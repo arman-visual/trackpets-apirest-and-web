@@ -49,9 +49,8 @@ public class JpaUserDetailsService implements UserDetailsService {
 				throw new UsernameNotFoundException("No user found with username: " + email);
 			}
 
-			return new org.springframework.security.core.userdetails.User(user.getEmail(),
-					user.getPassword().toLowerCase(), user.isEnabled(), accountNonExpired, credentialsNonExpired,
-					accountNonLocked, getAuthorities(user.getRoles()));
+			return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+					user.isEnabled(), true, true, true, getAuthorities(user.getRoles()));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

@@ -57,7 +57,7 @@ public class IndexController {
         return "registroUsuario";
     }
     
-    @PostMapping("/registro")
+    @PostMapping("/registro/save")
     public ModelAndView RegistroForm(@ModelAttribute("user") UsuarioDTO userDto, BindingResult bindingResult, HttpServletRequest request) {
     	try {
             Usuario registered = usuarioService.registerNewUserAccount(userDto);
