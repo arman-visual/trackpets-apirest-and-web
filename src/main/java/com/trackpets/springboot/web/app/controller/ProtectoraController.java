@@ -34,7 +34,7 @@ public class ProtectoraController {
 		return "listProtectoras";
 	}
 
-	@Secured("ROLE_USER")
+	//@Secured("ROLE_USER")
 	@GetMapping(value = "/addProtectora")
 	public String addProtectora(ModelMap modelmap) {
 		Protectora protectora = new Protectora();

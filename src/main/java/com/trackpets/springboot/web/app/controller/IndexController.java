@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,11 +59,12 @@ public class IndexController {
     }
     
     @PostMapping("/registro/save")
-    public ModelAndView RegistroForm(@ModelAttribute("user") UsuarioDTO userDto, BindingResult bindingResult, HttpServletRequest request) {
+    public ModelAndView RegistroForm(@ModelAttribute("user") UsuarioDTO userDto, BindingResult bindingResult, HttpServletRequest request,Errors errors) {
     	try {
             Usuario registered = usuarioService.registerNewUserAccount(userDto);
             
             String appUrl = request.getContextPath();
+            //TODO Falla el tag es-ES configurar Local
             eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, 
               request.getLocale(), appUrl));
             

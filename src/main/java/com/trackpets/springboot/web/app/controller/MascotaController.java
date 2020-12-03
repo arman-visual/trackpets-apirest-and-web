@@ -90,7 +90,7 @@ public class MascotaController {
 		return "listarPet";
 	}
 	
-	@Secured("ROLE_ADMIN")
+	//@Secured("ROLE_ADMIN")
 	@GetMapping(value = "/addMascota")
 	public String addMascota(ModelMap modelmap) {
 		Mascota mascota = new Mascota();
@@ -101,7 +101,7 @@ public class MascotaController {
 		return "formPet";
 	}
 	
-	@Secured("ROLE_USER")
+	//@Secured("ROLE_USER")
 	@PostMapping(value = "/guardar")
 	public String guardarMascota(@Validated Mascota mascota, BindingResult result, ModelMap modelmap,
 			SessionStatus status) {
@@ -115,7 +115,7 @@ public class MascotaController {
 		return "redirect:/mascota/listar";
 	}
 	
-	@Secured("ROLE_ADMIN")
+	//@Secured("ROLE_ADMIN")
 	@GetMapping("/editar/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 

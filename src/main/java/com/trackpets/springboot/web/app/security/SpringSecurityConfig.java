@@ -3,9 +3,13 @@ package com.trackpets.springboot.web.app.security;
 import java.util.Locale;
 import java.util.Properties;
 
+import javax.mail.Message;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Description;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,15 +18,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import com.trackpets.springboot.web.app.service.JpaUserDetailsService;
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @Configuration
-public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SpringSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 	
 	@Autowired
 	private JpaUserDetailsService userDetailsService;	 
@@ -32,30 +37,26 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-	@Bean
-	public LocaleResolver localeResolver() {
-		SessionLocaleResolver slr = new SessionLocaleResolver();
-		slr.setDefaultLocale(Locale.FRANCE);
-		return slr;
-	}
-	
-	@Bean
-	public JavaMailSender getJavaMailSender() {
-	    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-	    mailSender.setHost("smtp.gmail.com");
-	    mailSender.setPort(587);
-	    
-	    mailSender.setUsername("my.gmail@gmail.com");
-	    mailSender.setPassword("password");
-	    
-	    Properties props = mailSender.getJavaMailProperties();
-	    props.put("mail.transport.protocol", "smtp");
-	    props.put("mail.smtp.auth", "true");
-	    props.put("mail.smtp.starttls.enable", "true");
-	    props.put("mail.debug", "true");
-	    
-	    return mailSender;
-	}
+	/*
+	 * @Bean public LocaleResolver localeResolver() { SessionLocaleResolver slr =
+	 * new SessionLocaleResolver(); slr.setDefaultLocale(Locale.ENGLISH); return
+	 * slr; }
+	 */
+
+    @Bean
+    public LocaleResolver localeResolver() {
+        final CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
+        cookieLocaleResolver.setDefaultLocale(new Locale("es"));
+        return cookieLocaleResolver;
+    }
+    
+    @Bean
+    @Description("Spring Message Resolver")
+    public ResourceBundleMessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages");
+        return messageSource;
+    }
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

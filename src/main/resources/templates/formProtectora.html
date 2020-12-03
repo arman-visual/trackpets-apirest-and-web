@@ -9,7 +9,8 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<form th:action="@{/protectora/guardar}" th:object="${protectora}" method="post" >
+	<div class="container">
+	<form class="form-control" th:action="@{/protectora/guardar}" th:object="${protectora}" method="post" >
 		<table>
 			<tr>
 				<td>Nombre de protectora</td>
@@ -37,5 +38,6 @@
 		</table>
 <!--  	<input type="hidden" th:field="*{id}"/>	 -->
 	</form>
+	</div>
 </body>
 </html>
