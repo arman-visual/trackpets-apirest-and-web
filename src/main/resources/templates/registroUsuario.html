@@ -23,7 +23,7 @@
 
 					<form th:action="@{/registro/save}" th:object="${user}" method="post">
 						<div>
-							<label th:text="#{label.user.username}">Username</label> <input
+							<label th:text="#{label.user.firstName}">Username</label> <input
 								th:field="*{username}" />
 <!-- 							<p th:each="error: ${#fields.errors('firstName')}" -->
 <!-- 								th:text="${error}">Validation error</p> -->

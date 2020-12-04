@@ -22,6 +22,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 
     @Autowired
     private JavaMailSender mailSender;
+    
 
     @Override
     public void onApplicationEvent(final OnRegistrationCompleteEvent event) {
@@ -34,7 +35,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         service.createVerificationToken(user, token);
         
         String recipientAddress = user.getEmail();
-        String subject = "Registration Confirmation";
+        String subject = "Confirmacion de Registro";
         String confirmationUrl 
           = event.getAppUrl() + "/regitrationConfirm.html?token=" + token;
         String message = messages.getMessage("message.regSucc", null, event.getLocale());
@@ -44,7 +45,6 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         email.setSubject(subject);
         email.setText(message + "\r\n" + "http://localhost:8080" + confirmationUrl);
         mailSender.send(email);
-    }
-    
+	}
 
 }

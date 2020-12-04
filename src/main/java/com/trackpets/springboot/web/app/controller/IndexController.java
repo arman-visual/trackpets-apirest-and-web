@@ -73,6 +73,7 @@ public class IndexController {
             mav.addObject("message", "An account for that username/email already exists.");
             return mav;
         }catch (RuntimeException ex) {
+        	System.out.println(ex);
             return new ModelAndView("emailError", "user", userDto);
         }
      

@@ -34,4 +34,5 @@ public class OnRegistrationCompleteEvent extends ApplicationEvent {
         return user;
     }
 
+    
 }
