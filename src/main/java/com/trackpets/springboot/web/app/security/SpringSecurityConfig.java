@@ -39,6 +39,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter implement
 				 * .antMatchers("/protectora/addProtectora/**").hasAnyRole("USER")
 				 * .antMatchers("/protectora/editar/**").hasAnyRole("ADMIN")
 				 */
+		.antMatchers("/mascota/editar/**").hasAuthority("EDIT_PRIVILEGE")
+		.antMatchers("/mascota/listar").hasAuthority("WRITE_PRIVILEGE")
 		.anyRequest().authenticated()
 		.and()
 		.formLogin().loginPage("/login").permitAll()

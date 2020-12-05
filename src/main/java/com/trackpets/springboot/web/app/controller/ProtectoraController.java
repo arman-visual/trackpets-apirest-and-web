@@ -26,7 +26,7 @@ public class ProtectoraController {
 	@Autowired
 	private IProtectoraService protectoraService;
 	
-	@Secured("ROLE_USER")
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/listar")
 	public String listar(Model model) {
 		model.addAttribute("titulo", "Lista de protectoras");
