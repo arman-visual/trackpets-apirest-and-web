@@ -12,48 +12,49 @@
 <title>Registrarse</title>
 </head>
 <body>
-	<main role="main">
-<!-- 	<header th:replace="layout/layout :: header"></header> -->
-
-		<div class="container py-4">
-
-			<div class="card border-primary text-center">
-				<div class="card-header">Registro nuevo usuario</div>
-				<div class="card-body">
-
-					<form th:action="@{/registro/save}" th:object="${user}" method="post">
-						<div>
-							<label th:text="#{label.user.firstName}">Username</label> <input
-								th:field="*{username}" />
-<!-- 							<p th:each="error: ${#fields.errors('firstName')}" -->
-<!-- 								th:text="${error}">Validation error</p> -->
-						</div>
+<div class="container">
+	<div class="card text-center">
+		<div class="card-header">Registro de nuevo usuario</div>
+		
+		<div class="alert alert-danger" th:if="${error}" th:text="${error}">
+		</div>
+		
+		<div class="alert alert-danger" th:if="${errorPassword}"
+			th:text="${errorPassword}"></div>
 			
-						<div>
-							<label th:text="#{label.user.email}">Email</label> <input
-								type="email" th:field="*{email}" />
-					 <span id="emailError" class="alert alert-danger col-sm-4" style="display:none"></span>
-						</div>
-						<div>
-							<label th:text="#{label.user.password}">password</label> <input
-								type="password" th:field="*{password}" />
-<!-- 							<p th:each="error : ${#fields.errors('password')}" -->
-<!-- 								th:text="${error}">Validation error</p> -->
-						</div>
-						<div>
-							<label th:text="#{label.user.confirmPass}">confirm password</label> <input
-								type="password" th:field="*{matchingPassword}" />
-						</div>
-						<button type="submit" th:text="#{label.form.submit}">submit</button>
-					</form>
+		<div class="card-body align-self-center d-flex justify-content-center">
+
+			<form class="form-signin col-8" th:action="@{/registro/save}"
+				th:object="${user}" method="post">
+
+				<div class="row">
+					<label th:text="#{label.user.firstName}">Username</label> <input
+						class="form-control" th:field="*{username}" required="required" />
 				</div>
 
-			</div>
+				<div class="row">
+					<label th:text="#{label.user.email}">Email</label> <input
+						class="form-control" type="email" th:field="*{email}" required="required" />
+				</div>
 
+
+				<div class="row">
+					<label th:text="#{label.user.password}">password</label> <input
+						class="form-control" type="password" th:field="*{password}" />
+				</div>
+				<div class="row">
+					<label th:text="#{label.user.confirmPass}">confirm password</label>
+					<input class="form-control" type="password" th:field="*{matchingPassword}" />
+				</div>
+				<div class="row my-2">
+				<button class="btn btn-outline-primary" type="submit"
+					th:text="#{label.form.submit}">submit</button>
+				</div>
+			</form>
 		</div>
 
-
-		<!-- 	<footer th:replace="layout/layout :: footer"></footer> -->
-</main>
+	</div>
+</div>
 </body>
+
 </html>

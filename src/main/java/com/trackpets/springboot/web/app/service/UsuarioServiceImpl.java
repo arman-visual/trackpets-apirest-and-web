@@ -41,7 +41,6 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	public void save(Usuario usuario) {
 		usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 		List<Role> rolesUsuario = roleDao.findAll();
-
 		usuario.setRoles(rolesUsuario);
 		usuarioDao.save(usuario);
 

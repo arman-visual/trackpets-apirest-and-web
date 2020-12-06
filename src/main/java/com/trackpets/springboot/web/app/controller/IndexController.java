@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -59,26 +60,32 @@ public class IndexController {
     }
     
     @PostMapping("/registro/save")
-    public ModelAndView RegistroForm(@ModelAttribute("user") UsuarioDTO userDto, BindingResult bindingResult, HttpServletRequest request,Errors errors) {
-    	try {
-            Usuario registered = usuarioService.registerNewUserAccount(userDto);
-            
-            String appUrl = request.getContextPath();
-            //TODO Falla el tag es-ES configurar Local
-            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, 
-              request.getLocale(), appUrl));
-            
-        } catch (UserAlreadyExistException uaeEx) {
-        	ModelAndView mav = new ModelAndView("registration", "user", userDto);
-            mav.addObject("message", "An account for that username/email already exists.");
-            return mav;
-        }catch (RuntimeException ex) {
-        	System.out.println(ex);
-            return new ModelAndView("emailError", "user", userDto);
-        }
-     
-    	return new ModelAndView("successRegister", "user", userDto);
-    }
+	public ModelAndView RegistroForm(@ModelAttribute("user") @Valid UsuarioDTO userDto, BindingResult bindingResult,
+			HttpServletRequest request, Errors errors) {
+		try {
+			//Validamos formulario por si existe algun error
+			if (bindingResult.hasErrors()) {
+				throw new Exception();
+			}
+			Usuario registered = usuarioService.registerNewUserAccount(userDto);
+			String appUrl = request.getContextPath();
+			eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
+
+		} catch (UserAlreadyExistException uaeEx) {
+			ModelAndView mav = new ModelAndView("registroUsuario", "user", userDto);
+			mav.addObject("error", "Email ya registrado.");
+			return mav;
+		} catch (RuntimeException ex) {
+			System.out.println(ex);
+			return new ModelAndView("emailError", "user", userDto);
+		} catch (Exception e) {
+			ModelAndView mav = new ModelAndView("registroUsuario", "user", userDto);
+			mav.addObject("errorPassword", "Passwords no coinciden.");
+			return mav;
+		}
+
+		return new ModelAndView("successRegister", "user", userDto);
+	}
 
     @GetMapping("/regitrationConfirm")
     public String confirmRegistration

@@ -1,7 +1,9 @@
 package com.trackpets.springboot.web.app.models.dao.dto;
 
 import com.sun.istack.NotNull;
+import com.trackpets.springboot.web.app.validation.PasswordMatches;
 
+@PasswordMatches
 public class UsuarioDTO {
 
 	@NotNull

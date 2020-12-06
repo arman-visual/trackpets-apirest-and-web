@@ -13,34 +13,31 @@
 
 </head>
 <body>
-	<main role="main">
-<!-- 	<header th:replace="layout/layout :: header"></header> -->
-
-	<div class="container py-4">
+	<div class="container">
 
 		<div class="card border-primary text-center">
 			<div class="card-header">Por favor, introduzca su cuenta</div>
-			<div class="card-body">
+			<div class="alert alert-danger col-12 align-self-center"
+				th:if="${param.error != null}">Email ó Password
+				incorrecto</div>
+			<div class="card-body align-self-center d-flex justify-content-center">
 
-				<form th:action="@{/login}" method="post">
+				<form class="form-signin col-auto" th:action="@{/login}" method="post">
 
-					<div class="formgroup col-sm-6">
+					<div class="row">
+					<label>Username</label>
 						<input type="text" name="username" id="username"
 							class="form-control" placeholder="Email" autofocus required />
 					</div>
-					<div class="formgroup col-sm-6">
+					<div class="row">
+					<label>Password</label>
 						<input type="password" name="password" id="password"
 							class="form-control" placeholder="Password" required />
 					</div>
-					<div class="formgroup col-sm-6">
+					<div class="row my-2">
 						<input type="submit" class="btn btn_lg btn-primary btn-block"
 							value="Sign In" />
 					</div>
-					<div class= "alert alert-danger col-sm-6" th:if="${param.error != null}"
-							>Email ó password incorrecto</div>
-<!-- 						<div th:if="${param.error != null}" -->
-<!-- 							th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">error</div> -->
-
 					</form>
 			</div>
 
@@ -48,8 +45,5 @@
 
 	</div>
 
-
-<!-- 	<footer th:replace="layout/layout :: footer"></footer> -->
-</main>
 </body>
 </html>
