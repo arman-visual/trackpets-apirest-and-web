@@ -31,7 +31,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter implement
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/css/**", "/js/**", "/images/**", "/home","/registro","/registro/save").permitAll()
+		http.authorizeRequests().antMatchers("/resource/**","/static/**", "/css/**", "/js/**", "/images/**", "/home","/registro","/registro/save").permitAll()
 				/*
 				 * .antMatchers("/mascota/addMascota/**").hasAnyRole("USER")
 				 * .antMatchers("/mascota/editar/**").hasAnyRole("ADMIN")
@@ -39,11 +39,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter implement
 				 * .antMatchers("/protectora/addProtectora/**").hasAnyRole("USER")
 				 * .antMatchers("/protectora/editar/**").hasAnyRole("ADMIN")
 				 */
+		.antMatchers("/mascota/addMascota/**").hasAuthority("EDIT_PRIVILEGE")
 		.antMatchers("/mascota/editar/**").hasAuthority("EDIT_PRIVILEGE")
-		.antMatchers("/mascota/listar").hasAuthority("WRITE_PRIVILEGE")
+		.antMatchers("/mascota/listar").hasAuthority("READ_PRIVILEGE")
+		.antMatchers("/mascota/home").permitAll()
+		.antMatchers("/protectora/addProtectora/**").hasAnyAuthority("WRITE_PRIVILEGE")
+		.antMatchers("/protectora/editar/**").hasAnyAuthority("WRITE_PRIVILEGE")
 		.anyRequest().authenticated()
 		.and()
-		.formLogin().loginPage("/login").permitAll()
+		.formLogin()
+		.failureUrl("/login.html?error=true")
+		.loginPage("/login").permitAll()
 		.and().logout().permitAll(); 
 	}
 

@@ -1,5 +1,7 @@
 ---
 spring:
+  mvc:
+    static-path-pattern: "/resources/**"
   datasource:
     url: jdbc:mysql://localhost:3306/trackpetsdb?serverTimezone=Europe/Madrid
     username: root

@@ -26,7 +26,7 @@
 
 					<div class="formgroup col-sm-6">
 						<input type="text" name="username" id="username"
-							class="form-control" placeholder="Username" autofocus required />
+							class="form-control" placeholder="Email" autofocus required />
 					</div>
 					<div class="formgroup col-sm-6">
 						<input type="password" name="password" id="password"
@@ -36,8 +36,10 @@
 						<input type="submit" class="btn btn_lg btn-primary btn-block"
 							value="Sign In" />
 					</div>
-						<div th:if="${param.error != null}"
-							th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">error</div>
+					<div class= "alert alert-danger col-sm-6" th:if="${param.error != null}"
+							>Email ó password incorrecto</div>
+<!-- 						<div th:if="${param.error != null}" -->
+<!-- 							th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">error</div> -->
 
 					</form>
 			</div>
