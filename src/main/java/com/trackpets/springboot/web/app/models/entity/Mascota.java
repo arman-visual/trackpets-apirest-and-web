@@ -45,7 +45,7 @@ public class Mascota implements Serializable {
 	@Column(name = "genero", length = 10, nullable = false)
 	private String genero;
 
-	@Column(name = "foto", length = 10, nullable = true)
+	@Column(name = "foto_url", length = 200, nullable = true)
 	private String foto;
 
 	@Column(name = "fecha_de_adopcion", nullable = true)

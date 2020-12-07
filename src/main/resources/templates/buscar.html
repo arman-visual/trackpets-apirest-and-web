@@ -38,12 +38,13 @@
 					<div class="card col-md-4" style="width: 18rem;"
 						th:each="mascota: ${mascotas}">
 						<img class="img-fluid img-thumbnail"
-							src="https://loremflickr.com/320/240?random=1"
+							th:src="${mascota.foto}"
 							alt="Imagen de mascota">
 						<div class="card-body">
-							<h5 class="card-title" th:text="${mascota.nombre}"></h5>
-							<p class="card-text" th:text="${mascota.raza}"></p>
-							<a href="#" class="btn btn-primary">Adoptar</a>
+							<h5 class="card-title" th:text="${mascota.nombre} + 'Edad:' + ${mascota.edad} + años"></h5>
+							<p class="card-text" th:text="${mascota.descripcion}"></p>
+							<a href="#" class="card-link">Detalle</a> <a th:href="'mailto:' + ${mascota.protectora.correo}"
+								class="card-link">Adoptar</a>
 						</div>
 					</div>
 				</div>
