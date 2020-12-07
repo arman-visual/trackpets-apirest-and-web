@@ -39,7 +39,6 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         String confirmationUrl 
           = event.getAppUrl() + "/regitrationConfirm.html?token=" + token;
         String message = messages.getMessage("message.regSucc", null, event.getLocale());
-        //TODO revisar emailError resolver en thymeleaf
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
         email.setSubject(subject);
