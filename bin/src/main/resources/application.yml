@@ -1,0 +1,14 @@
+    org.hibernate.sql: debug
+  level: 
+logging:
+      max-request-size: 10MB       
+      ddl-auto: update  servlet:    multipart:      max-file-size: 10MB
+    hibernate:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  jpa:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: 
+    username: root
+    url: jdbc:mysql://localhost:3306/trackpetsdb?serverTimezone=Europe/Madrid
+  datasource:
+spring:

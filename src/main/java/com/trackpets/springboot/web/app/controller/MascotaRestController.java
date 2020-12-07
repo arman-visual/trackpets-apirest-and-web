@@ -2,6 +2,8 @@ package com.trackpets.springboot.web.app.controller;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
-
+import org.springframework.security.access.annotation.Secured;
 import com.trackpets.springboot.web.app.models.entity.Mascota;
 import com.trackpets.springboot.web.app.service.IMascotaService;
 
+@Secured("ROLE_USER")
 @RestController
 @RequestMapping("/api/mascotas")
 public class MascotaRestController {
@@ -34,7 +37,10 @@ public class MascotaRestController {
 	@GetMapping("/buscar/nombre/{nombre}")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Mascota> mascotasByNombre(@PathVariable String nombre) {
-		return mascotaService.mascotasByNombre(nombre);
+		List<Mascota> mascotas = mascotaService.mascotasByNombre(nombre);
+		if(mascotas.isEmpty()) {
+			throw new NoResultException("No se han encontrado mascotas con raza '".concat(nombre).concat("'"));
+		} else return mascotas;
 	}
 
 	@GetMapping("/buscar/raza/{raza}")
