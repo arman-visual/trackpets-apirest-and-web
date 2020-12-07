@@ -2,6 +2,7 @@ package com.trackpets.springboot.web.app.controller;
 
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -24,7 +25,8 @@ public class ProtectoraController {
 
 	@Autowired
 	private IProtectoraService protectoraService;
-
+	
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/listar")
 	public String listar(Model model) {
 		model.addAttribute("titulo", "Lista de protectoras");
@@ -32,6 +34,7 @@ public class ProtectoraController {
 		return "listProtectoras";
 	}
 
+	//@Secured("ROLE_USER")
 	@GetMapping(value = "/addProtectora")
 	public String addProtectora(ModelMap modelmap) {
 		Protectora protectora = new Protectora();
@@ -41,6 +44,7 @@ public class ProtectoraController {
 		return "formProtectora";
 	}
 
+	@Secured("ROLE_USER")
 	@PostMapping(value = "/guardar")
 	public String guardarProtectora(@Validated Protectora protectora, BindingResult result, ModelMap modelmap,
 			SessionStatus status) {
@@ -52,7 +56,8 @@ public class ProtectoraController {
 		status.setComplete();
 		return "redirect:/protectora/listar";
 	}
-
+	
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/editar/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 
@@ -68,7 +73,8 @@ public class ProtectoraController {
 		model.put("textButton", "Actualizar");
 		return "formProtectora";
 	}
-
+	
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable(value = "id") Long id) {
 
