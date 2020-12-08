@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+	integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+	crossorigin="anonymous">
+	<title>TrackPets-Noticias</title>
+	</head>
+
+	
+	<header th:replace="layout/layout :: header"></header>
+		<!-- container -->
+		<section class="jumbotron text-center">
+			<div class="container">
+				<img class="img-fluid" th:src="@{/images/logoTransparente.png}" width="200">
+				<h1 class="jumbotron-heading" th:text="${titulo}"></h1>
+			</div >
+		</section>
+		
+		<div class="jumbotron text-center">
+				<h3 >  Estas son las razas de perro que más te ayudan a aliviar el estrés</h3>
+				 <img class="img-fluid" th:src="@{/images/noticia1.png}" width="200">
+				 <p>La crisis derivada de la Covid-19 y todos los cambios que la pandemia ha introducido en nuestras vidas y rutinas están siendo una dura prueba para nuestras emociones y nuestra salud mental. Incertidumbre, miedo, angustia, agotamiento e incluso hastío son fases de la montaña rusa emocional porque la que han pasado y pasan muchas personas.</p>
+				 <p>Eso, sumado a la preocupación por los problemas de salud, económicos o personales propios o de familiares y amigos, ha disparado los niveles de estrés en una parte importante de la población, con los problemas asociados que conlleva a nivel de dificultades para dormir, dolores de cabeza, ansiedad, irritabilidad. Según un estudio sobre salud y estilos de vida realizado por la aseguradora Aegon, nueve de cada diez españoles declara haber sufrido estrés en los últimos doce meses, y el 90%reconoce que el estrés impacta sobre su salud.
+				 <p>Razas que mas te ayudan: Labrador retriever, Husky, Golden retriever,pastores alemanes y beagle </p>
+				
+			</div>
+			
+			<div class="jumbotron text-center">
+				<h3 >  Madrid anima a adoptar perros "jubilados" tras paso por fuerzas de seguridad</h3>
+				<img class="img-fluid" th:src="@{/images/noticia2.jpeg}" width="200">
+				 <p>El Ayuntamiento de Madrid ha albergado este viernes la presentación de la campaña 'Adopta un Jubilado 2021', organizada por la Asociación Héroes de 4 Patas con el objetivo de ofrecer una familia a perros que han "prestado su servicio" en las Fuerzas y Cuerpos de Seguridad del Estado, así como en policías locales, bomberos o empresas de seguridad privado.
+				<p>Según precisa el Ayuntamiento en una nota, los canes que habitualmente se ofrecen en adopción han prestado servicio entre ocho y nueve años o han dejado de hacerlo antes porque sus facultades han comenzado a mermar. También los hay más jóvenes que, tras haber sido adiestrados, no han desarrollado las capacidades y aptitudes necesarias para desarrollar el trabajo.</p>
+				
+				
+			</div>
+			
+			
+			<div class="jumbotron text-center">
+				<h3 >  Aumentan las adopciones de perros durante la pandemia</h3>
+				<img class="img-fluid" th:src="@{/images/noticia3.jpeg}" width="200">
+				<p> Este incremento en el número de adopciones puede deberse a la situación actual «que puede haber hecho que mucha gente se conciencie y además, ahora se está haciendo otro tipo de vida, más familiar».También, muchos ciudadanos han podido darse cuenta de que estos animales necesitan una segunda oportunidad.</p>
+				<p>Según precisa el Ayuntamiento en una nota, los canes que habitualmente se ofrecen en adopción han prestado servicio entre ocho y nueve años o han dejado de hacerlo antes porque sus facultades han comenzado a mermar. También los hay más jóvenes que, tras haber sido adiestrados, no han desarrollado las capacidades y aptitudes necesarias para desarrollar el trabajo.</p>
+				
+				
+			</div>
+			
+			<div class="jumbotron text-center">
+				<h3 >  MeowTalk, la app que te permite saber qué significan los maullidos de tu gato</h3>
+				<img class="img-fluid" th:src="@{/images/noticia4.png}" width="200"> 
+				<p>Según un censo del Ministerio de Agricultura, Alimentación y Medio Ambiente (Magrama), en España hay unos 2,5 millones de gatos. Seguramente los dueños de muchos de estos pequeños felinos te dirán que siempre saben lo que quiere su mascota y que la conocen bien. Y ahora parece que esto va a ser más verdad que nunca gracias -cómo no- a una sencilla app.</p>
+				<p>El maullido de cada uno es único y se adapta a su dueño, con algunos más vocales que otros.Por ello, la traducción difiere con cada 'usuario': "Cuenta con nueve intenciones generales del gato; estas nueve intenciones representan sus estados de ánimo, pero cada gato también tiene su propia vocalización y vocabulario de maullidos únicos que van más allá de estas nueve intenciones generales"</p>
+				
+				
+			</div>
+			
+	
+		<footer th:fragment="footer" class="container">
+		<hr />
+		<img sec:authorize="isAuthenticated()" class="image-fluid" th:src="@{/images/logoTransparente.png}" width="50" />
+		<p sec:authorize="isAuthenticated()">
+			Usuario logeado: <span sec:authentication="name"></span> | Privilegios: <span
+				sec:authentication="principal.authorities"></span>
+		</p>
+	</footer>
+</body>
+</html>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+</html>
+	
