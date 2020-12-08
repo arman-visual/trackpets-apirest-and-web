@@ -96,20 +96,20 @@ public class MascotaServiceImpl implements IMascotaService {
 	}
 
 	@Override
-	public List<Mascota> mascotasByTamaño(String tamaño) {
+	public List<Mascota> mascotasByTamaño(String tamanyo) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Mascota> cr = cb.createQuery(Mascota.class);
 		Root<Mascota> root = cr.from(Mascota.class);
-		cr.select(root).where(cb.like(root.get("tamaño"), "%" + tamaño + "%"));
+		cr.select(root).where(cb.like(root.get("tamanyo"), "%" + tamanyo + "%"));
 		List<Mascota> mascotas = null;
 		try {
 			mascotas = em.createQuery(cr).getResultList();
 			if (!mascotas.isEmpty()) {
-			LOGGER.info("Se han encontrado mascotas de tamaño '".concat(tamaño).concat("'"));
+			LOGGER.info("Se han encontrado mascotas de tamaño '".concat(tamanyo).concat("'"));
 			mascotas = mascotas.stream().filter(x -> x.isEstado()).collect(Collectors.toList());
-			LOGGER.info("Filtrando mascotas solo disponibles... '".concat(tamaño).concat("'"));
+			LOGGER.info("Filtrando mascotas solo disponibles... '".concat(tamanyo).concat("'"));
 			}else {
-				LOGGER.error("No se han encontrado mascotas de tamaño ".concat(tamaño));
+				LOGGER.error("No se han encontrado mascotas de tamaño ".concat(tamanyo));
 			}
 		} catch (Exception e) {
 			LOGGER.error("Error: " + e);

@@ -113,28 +113,24 @@ public class IndexController {
         return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); 
     }
    
-	//@Secured("ROLE_USER")
 	@GetMapping(value = { "/home", "/", "" })
 	public String index(ModelMap modelmap) {
 		modelmap.addAttribute("titulo", "Track Pets Web Oficial");
 		return "index";
 	}
 
-	//@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@GetMapping(value = "/addAnimal")
 	public String addAnimal(ModelMap modelmap) {
 		modelmap.addAttribute("titulo", "Alta mascota");
 		return "formPet";
 	}
 
-	//@Secured({"READ_PRIVILEGE", "WRITE_PRIVILEGE"})
 	@GetMapping(value = "/addProtectora")
 	public String addProtectora(ModelMap modelmap) {
 		modelmap.addAttribute("titulo", "Alta protectora");
 		return "formProtectora";
 	}
 
-	//@Secured("ROLE_ADMIN")
 	@GetMapping(value = "/addPersona")
 	public String addPersona(ModelMap modelmap) {
 		modelmap.addAttribute("titulo", "Alta persona");

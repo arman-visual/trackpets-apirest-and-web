@@ -36,8 +36,8 @@ public class Mascota implements Serializable {
 	@Column(name = "edad", length = 2, nullable = true)
 	private int edad;
 
-	@Column(name = "tamaño", length = 30, nullable = true)
-	private String tamaño;
+	@Column(name = "tamanyo", length = 30, nullable = true)
+	private String tamanyo;
 
 	@Column(name = "nombre", length = 30, nullable = false)
 	private String nombre;
@@ -45,7 +45,7 @@ public class Mascota implements Serializable {
 	@Column(name = "genero", length = 10, nullable = false)
 	private String genero;
 
-	@Column(name = "foto", length = 10, nullable = true)
+	@Column(name = "foto_url", length = 200, nullable = true)
 	private String foto;
 
 	@Column(name = "fecha_de_adopcion", nullable = true)
@@ -100,12 +100,12 @@ public class Mascota implements Serializable {
 		this.edad = edad;
 	}
 
-	public String getTamaño() {
-		return tamaño;
+	public String getTamanyo() {
+		return tamanyo;
 	}
 
-	public void setTamaño(String tamaño) {
-		this.tamaño = tamaño;
+	public void setTamaño(String tamanyo) {
+		this.tamanyo = tamanyo;
 	}
 
 	public String getNombre() {
