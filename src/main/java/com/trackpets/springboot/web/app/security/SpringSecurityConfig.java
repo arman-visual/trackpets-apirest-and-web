@@ -46,6 +46,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter implement
 		.antMatchers("/mascota/listar").hasAuthority("READ_PRIVILEGE")
 		.antMatchers("/mascota/home").permitAll()
 		.antMatchers("/protectora/addProtectora/**").hasAnyAuthority("WRITE_PRIVILEGE")
+		.antMatchers("/admin/**").hasAnyAuthority("WRITE_PRIVILEGE")
 		.antMatchers("/protectora/editar/**").hasAnyAuthority("WRITE_PRIVILEGE")
 		.anyRequest().authenticated()
 		.and()
