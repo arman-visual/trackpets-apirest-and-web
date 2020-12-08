@@ -115,25 +115,21 @@ public class IndexController {
    
 	@GetMapping(value = { "/home", "/", "" })
 	public String index(ModelMap modelmap) {
-		modelmap.addAttribute("titulo", "Track Pets Web Oficial");
-		return "index";
+		return "redirect:/mascota/home";
 	}
 
-	@GetMapping(value = "/addAnimal")
+	@GetMapping(value = "/admin")
+	public String showPanelAdmin(ModelMap modelmap) {
+		return "panelAdmin";
+	}
+	
+	@GetMapping(value = "/admin/addAnimal")
 	public String addAnimal(ModelMap modelmap) {
-		modelmap.addAttribute("titulo", "Alta mascota");
-		return "formPet";
+		return "redirect:/mascota/addMascota";
 	}
 
-	@GetMapping(value = "/addProtectora")
+	@GetMapping(value = "/admin/addProtectora")
 	public String addProtectora(ModelMap modelmap) {
-		modelmap.addAttribute("titulo", "Alta protectora");
-		return "formProtectora";
-	}
-
-	@GetMapping(value = "/addPersona")
-	public String addPersona(ModelMap modelmap) {
-		modelmap.addAttribute("titulo", "Alta persona");
-		return "formPersona";
+		return "redirect:/protectora/addProtectora";
 	}
 }
