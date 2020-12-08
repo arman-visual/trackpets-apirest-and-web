@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -41,10 +40,9 @@ public class MascotaController {
 	@Autowired
 	private IProtectoraService protectoraService;
 
-	//@Secured("ROLE_USER")
 	@GetMapping("/home")
 	public String home(Model model) {
-		List<Mascota> mascotas = new ArrayList<Mascota>();
+		List<Mascota> mascotas = mascotaService.findAll();
 		model.addAttribute("titulo", "Buscar mascotas");
 		model.addAttribute("mascotas", mascotas);
 		return "buscar";
@@ -90,7 +88,6 @@ public class MascotaController {
 		return "listarPet";
 	}
 	
-	//@Secured("ROLE_ADMIN")
 	@GetMapping(value = "/addMascota")
 	public String addMascota(ModelMap modelmap) {
 		Mascota mascota = new Mascota();
@@ -101,7 +98,6 @@ public class MascotaController {
 		return "formPet";
 	}
 	
-	//@Secured("ROLE_USER")
 	@PostMapping(value = "/guardar")
 	public String guardarMascota(@Validated Mascota mascota, BindingResult result, ModelMap modelmap,
 			SessionStatus status) {
@@ -115,7 +111,6 @@ public class MascotaController {
 		return "redirect:/mascota/listar";
 	}
 	
-	//@Secured("ROLE_ADMIN")
 	@GetMapping("/editar/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 
@@ -133,7 +128,6 @@ public class MascotaController {
 		return "formPet";
 	}
 	
-	@Secured("ROLE_ADMIN")
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable(value = "id") Long id) {
 
