@@ -3,9 +3,9 @@ spring:
   mvc:
     static-path-pattern: "/resources/**"
   datasource:
-    url: jdbc:mysql://localhost:3306/trackpetsdb?serverTimezone=Europe/Madrid
-    username: root
-    password: 
+    url: jdbc:mysql://heroku_05d6f6042d6e482
+    username: be2e0d5c709d04
+    password: 000d74a1
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -15,3 +15,4 @@ spring:
 logging:
   level: 
     org.hibernate.sql: debug
+    
