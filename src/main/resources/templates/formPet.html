@@ -9,50 +9,76 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<form class="form-control"th:action="@{/mascota/guardar}" th:object="${mascota}" method="post">
+	
+		<header th:replace="layout/layout :: header"></header>
+			<!-- container -->
+			<section class="jumbotron text-center">
+				<div class="container">
+					<img class="img-fluid" th:src="@{/images/logoTransparente.png}" width="200">
+					<h1 class="jumbotron-heading" th:text="${titulo}"></h1>
+				</div>
+			</section>
+	
+						
+			<div class="card-body align-self-center d-flex justify-content-center">
+	
+	
+	
+	<form class="jumbotron text-center "   th:action="@{/mascota/guardar}" th:object="${mascota}" method="post">
+		
 		<table>
-			<tr>
+			
+			<tr >
 				<td>Nombre</td>
-				<td><input type="text" th:field="*{nombre}" /></td>
+				<td><input type="text" th:field="*{nombre}"  class="form-control"/><td>
 			</tr>
-			<tr>
+			
+			<tr >
 				<td>Edad</td>
-				<td><input type="text" th:field="*{edad}"/></td>
+				<td><input type="text"  th:field="*{edad}" class="form-control" /></td>
 			</tr>
+							
 			<tr>
 				<td>Raza</td>
-				<td><input type="text" th:field="*{raza}" /></td>
+				<td><input type="text" th:field="*{raza}" class="form-control" /></td>
 			</tr>
-			<tr>
+			
+			<tr >
 				<td>Tamaño</td>
-				<td><input type="text" th:field="*{tamanyo}" /></td>
+				<td><input type="text" th:field="*{tamanyo}" class="form-control"/></td>
 			</tr>
-			<tr>
+			
+			<tr >
 				<td>Sexo</td>
-				<td><input type="text" th:field="*{genero}" /></td>
+				<td><input type="text" th:field="*{genero}" class="form-control"/></td>
 			</tr>
-			<tr>
+				
+			<tr >
 				<td>Nº Chip</td>
-				<td><input type="text" th:field="*{dni}" /></td>
+				<td><input type="text" th:field="*{dni}" class="form-control"/></td>
 			</tr>
-			<tr>
+				
+			<tr >
 				<td>Image(URL)</td>
-				<td><input type="text" th:field="*{foto}" /></td>
+				<td><input type="text" th:field="*{foto}" class="form-control"/></td>
 			</tr>
+				
 			<tr>
 				<td>Descripcion</td>
-				<td><input type="text" th:field="*{descripcion}"/></td>
+				<td><input type="text" th:field="*{descripcion}" class="form-control"/></td>
 			</tr>
-			<tr>
+			
+			<tr >
 				<td>Disponible para adoptar?</td>
-				<td><select th:field="*{estado}">
+				<td><select class= "form-control col-6" th:field="*{estado}">
                          <option value="true">Disponible</option>
 	    				<option value="false">No disponible</option>
                   </select></td>
 			</tr>
+			
 			<tr>
 				<td>Protectora de acogida</td>
-				<td><select th:field="*{protectora}">
+				<td><select class= "form-control col-6" th:field="*{protectora}">
 						<option value="">Selecionar</option>
 						<!-- th:value ha de ir id entidad y th:text nombre de atributo de entidad -->
 						<!-- De esta manera se referencia correctamente para poder verlos desde BBDD -->
@@ -60,12 +86,19 @@
 							th:value="${protectora.id}" th:utext="${protectora.nombre}" />
 				</select></td>
 			</tr>
-			<tr>
-				<td><input type="submit" th:value = "${textButton}"/></td>
+			
+			
+			<tr class= "d-flex justify-content-center">
+				<td><input  type="submit"  class="my-4" th:value = "${textButton}"/></td>
 			</tr>
+			
 		</table>
-			<!-- Cone sto podemos saber si hay un ID ya creado en BBDD -->
-<!--  	<input type="hidden" th:field="*{id}"/>	  -->
 	</form>
+	
+    </div>
+          
 </body>
 </html>
+
+			<!-- Cone sto podemos saber si hay un ID ya creado en BBDD -->
+<!--  	<input type="hidden" th:field="*{id}"/>	  -->
