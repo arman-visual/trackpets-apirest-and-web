@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,7 +25,6 @@ public class JpaUserDetailsService implements UserDetailsService {
 	@Autowired
 	private IUsuarioDao usuarioDao;
 
-	private Logger logger = LoggerFactory.getLogger(JpaUserDetailsService.class);
 
 	@Override
 	@Transactional(readOnly = true)

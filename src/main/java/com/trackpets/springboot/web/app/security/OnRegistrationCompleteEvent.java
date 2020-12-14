@@ -20,7 +20,6 @@ public class OnRegistrationCompleteEvent extends ApplicationEvent {
         this.appUrl = appUrl;
     }
 
-    //
 
     public String getAppUrl() {
         return appUrl;
