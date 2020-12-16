@@ -23,7 +23,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.trackpets.springboot.web.app.UserAlreadyExistException;
+import com.trackpets.springboot.web.app.configuration.UserAlreadyExistException;
 import com.trackpets.springboot.web.app.models.dao.dto.UsuarioDTO;
 import com.trackpets.springboot.web.app.models.entity.Usuario;
 import com.trackpets.springboot.web.app.models.entity.VerificationToken;

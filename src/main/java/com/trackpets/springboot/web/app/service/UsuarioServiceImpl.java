@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.trackpets.springboot.web.app.UserAlreadyExistException;
+import com.trackpets.springboot.web.app.configuration.UserAlreadyExistException;
 import com.trackpets.springboot.web.app.models.dao.IRoleDao;
 import com.trackpets.springboot.web.app.models.dao.IUsuarioDao;
 import com.trackpets.springboot.web.app.models.dao.VerificationTokenRepository;

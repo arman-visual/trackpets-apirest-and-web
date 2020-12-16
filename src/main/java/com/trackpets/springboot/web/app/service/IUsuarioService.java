@@ -1,6 +1,6 @@
 package com.trackpets.springboot.web.app.service;
 
-import com.trackpets.springboot.web.app.UserAlreadyExistException;
+import com.trackpets.springboot.web.app.configuration.UserAlreadyExistException;
 import com.trackpets.springboot.web.app.models.dao.dto.UsuarioDTO;
 import com.trackpets.springboot.web.app.models.entity.Usuario;
 import com.trackpets.springboot.web.app.models.entity.VerificationToken;
