@@ -34,18 +34,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter implement
 		http.authorizeRequests().antMatchers("/resource/**","/static/**", "/css/**", "/js/**", "/images/**", 
 				"/login*", "/logout*", "/signin/**", "/signup/**",
 				"/home","/registro","/registro/save","/regitrationConfirm*").permitAll()
-				/*
-				 * .antMatchers("/mascota/addMascota/**").hasAnyRole("USER")
-				 * .antMatchers("/mascota/editar/**").hasAnyRole("ADMIN")
-				 * .antMatchers("/persona/addPersona/**").hasAnyRole("USER")
-				 * .antMatchers("/protectora/addProtectora/**").hasAnyRole("USER")
-				 * .antMatchers("/protectora/editar/**").hasAnyRole("ADMIN")
-				 */
 		.antMatchers("/mascota/addMascota/**").hasAuthority("EDIT_PRIVILEGE")
 		.antMatchers("/mascota/editar/**").hasAuthority("EDIT_PRIVILEGE")
 		.antMatchers("/mascota/listar").hasAuthority("READ_PRIVILEGE")
 		.antMatchers("/mascota/home").permitAll()
 		.antMatchers("/protectora/addProtectora/**").hasAnyAuthority("WRITE_PRIVILEGE")
+		.antMatchers("/admin/**").hasAnyAuthority("WRITE_PRIVILEGE")
 		.antMatchers("/protectora/editar/**").hasAnyAuthority("WRITE_PRIVILEGE")
 		.anyRequest().authenticated()
 		.and()

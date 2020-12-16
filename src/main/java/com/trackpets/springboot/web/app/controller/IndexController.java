@@ -23,7 +23,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.trackpets.springboot.web.app.UserAlreadyExistException;
+import com.trackpets.springboot.web.app.configuration.UserAlreadyExistException;
 import com.trackpets.springboot.web.app.models.dao.dto.UsuarioDTO;
 import com.trackpets.springboot.web.app.models.entity.Usuario;
 import com.trackpets.springboot.web.app.models.entity.VerificationToken;
@@ -113,31 +113,23 @@ public class IndexController {
         return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); 
     }
    
-	//@Secured("ROLE_USER")
 	@GetMapping(value = { "/home", "/", "" })
 	public String index(ModelMap modelmap) {
-		modelmap.addAttribute("titulo", "Track Pets Web Oficial");
-		return "index";
+		return "redirect:/mascota/home";
 	}
 
-	//@Secured({"ROLE_USER", "ROLE_ADMIN"})
-	@GetMapping(value = "/addAnimal")
+	@GetMapping(value = "/admin")
+	public String showPanelAdmin(ModelMap modelmap) {
+		return "panelAdmin";
+	}
+	
+	@GetMapping(value = "/admin/addAnimal")
 	public String addAnimal(ModelMap modelmap) {
-		modelmap.addAttribute("titulo", "Alta mascota");
-		return "formPet";
+		return "redirect:/mascota/addMascota";
 	}
 
-	//@Secured({"READ_PRIVILEGE", "WRITE_PRIVILEGE"})
-	@GetMapping(value = "/addProtectora")
+	@GetMapping(value = "/admin/addProtectora")
 	public String addProtectora(ModelMap modelmap) {
-		modelmap.addAttribute("titulo", "Alta protectora");
-		return "formProtectora";
-	}
-
-	//@Secured("ROLE_ADMIN")
-	@GetMapping(value = "/addPersona")
-	public String addPersona(ModelMap modelmap) {
-		modelmap.addAttribute("titulo", "Alta persona");
-		return "formPersona";
+		return "redirect:/protectora/addProtectora";
 	}
 }

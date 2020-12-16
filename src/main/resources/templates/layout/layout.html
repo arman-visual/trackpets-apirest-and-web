@@ -28,9 +28,12 @@
 			</button>
 			<div class="collapse navbar-collapse">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/mascota/home}">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="#about"
 						th:href="@{/noticias}">Noticias</a></li>
+					<li class="nav-item"><a class="nav-link" href="#about"
+						sec:authorize="hasAuthority('WRITE_PRIVILEGE')" th:href="@{/admin}">Panel Administrador</a></li>
 				</ul>
 				<ul class="navbar-nav navbar-right">
 					<li sec:authorize="!isAuthenticated()"><a
@@ -72,6 +75,6 @@
 			Usuario logeado: <span sec:authentication="name"></span> | Privilegios: <span
 				sec:authentication="principal.authorities"></span>
 		</p>
-	</footer>
+	</footer>	
 </body>
 </html>

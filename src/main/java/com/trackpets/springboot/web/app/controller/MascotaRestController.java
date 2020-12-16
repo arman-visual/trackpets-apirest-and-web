@@ -62,18 +62,4 @@ public class MascotaRestController {
 		List<Mascota> mascotas = mascotaService.mascotasByGenero(genero);
 		return mascotas;
 	}
-	/*
-	 * 
-	 * @GetMapping("/buscar/{tipo}")
-	 * 
-	 * @ResponseStatus(HttpStatus.OK) public List<Mascota>
-	 * mascotasByEspecie(@PathVariable String especie){ List<Mascota> mascotas =
-	 * mascotaService.mascotasByEspecie(especie); return mascotas; }
-	 * 
-	 * @GetMapping("/buscar/{edad}")
-	 * 
-	 * @ResponseStatus(HttpStatus.OK) public List<Mascota>
-	 * mascotasByEdad(@PathVariable String edad){ List<Mascota> mascotas =
-	 * mascotaService.mascotasByEdad(edad); return mascotas; }
-	 */
 }

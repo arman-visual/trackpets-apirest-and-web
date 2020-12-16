@@ -1,4 +1,4 @@
-package com.trackpets.springboot.web.app;
+package com.trackpets.springboot.web.app.configuration;
 
 public final class UserAlreadyExistException extends RuntimeException {
 
